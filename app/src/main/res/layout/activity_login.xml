@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ep1.joaofran.com.ep1.LoginActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:id="@+id/tvLogin"
+        android:layout_above="@+id/etNUSP"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"
+        android:textSize="30sp"/>
+
+    <EditText
+        android:id="@+id/etNUSP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etPassword"
+        android:layout_marginBottom="15dp"
+        android:hint="@string/NUSP_hint"
+        android:inputType="number"
+        android:maxLength="7"
+        android:textColorLink="@android:color/darker_gray" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnLogin"
+        android:layout_marginBottom="15dp"
+        android:hint="@string/Pass_hint"
+        android:inputType="textPassword"
+        android:textColorLink="@android:color/darker_gray" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="161dp"
+        android:text="@string/login"
+        android:textColorLink="@android:color/darker_gray" />
+
+
+
+</RelativeLayout>
