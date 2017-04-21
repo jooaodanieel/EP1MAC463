@@ -11,6 +11,6 @@ public class StudentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student);
 
 
-        // alguma coisa
+        // alguma coisinha
     }
 }
