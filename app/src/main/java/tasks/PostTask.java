@@ -12,16 +12,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
-public class GetTask extends AsyncTask<String, Void, Boolean>{
+public class PostTask extends AsyncTask<String, Void, Boolean> {
 
     private static final String URL_BEGIN = "http://207.38.82.139:8001/";
-    private static final String TAG = "GETTASK";
-
-    private String url;
+    private static final String TAG = "POSTTASK";
 
     @Override
-    protected Boolean doInBackground (String... url_end) {
+    protected Boolean doInBackground (String... url_end){
 
         try {
             this.url = URL_BEGIN + url_end[0];
@@ -42,9 +39,6 @@ public class GetTask extends AsyncTask<String, Void, Boolean>{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        return null;
     }
 
 }
