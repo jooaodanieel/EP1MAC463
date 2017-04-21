@@ -37,6 +37,7 @@
         android:layout_marginBottom="15dp"
         android:hint="@string/Pass_hint"
         android:inputType="textPassword"
+        android:layout_centerInParent="true"
         android:textColorLink="@android:color/darker_gray" />
 
     <Button

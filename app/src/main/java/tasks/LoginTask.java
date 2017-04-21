@@ -1,4 +1,4 @@
-package ep1.joaofran.com.ep1;
+package tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -37,7 +37,7 @@ public class LoginTask extends AsyncTask<String,Void,Boolean> {
                     "6798294","e10adc3949ba59abbe56e057f20f883e");
                     /*URLEncoder.encode(this.login,"UTF-8"),
                     URLEncoder.encode(this.senha,"UTF-8"))*/;
-            URL url = new URL("http://207.38.82.139:8001/login/student?"+query);
+            URL url = new URL("http://207.38.82.139:8001/login/student");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());

@@ -6,10 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import tasks.GetTask;
+import tasks.LoginTask;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText login;
-    private EditText senha;
+    private EditText password;
     private static final String TAG = "LOGIN";
 
     @Override
@@ -18,16 +21,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         login = (EditText) findViewById(R.id.etNUSP);
-        senha = (EditText) findViewById(R.id.etPassword);
+        password = (EditText) findViewById(R.id.etPassword);
     }
 
     public void onClick (View view) {
         String l = login.getText().toString();
-        String p = senha.getText().toString();
+        String p = password.getText().toString();
 
         Log.d(TAG, "Botão clicked");
 
-        LoginTask task = new LoginTask("login","senha");
-        task.execute("string qualquer");
+        new GetTask().execute("teacher");
     }
 }
