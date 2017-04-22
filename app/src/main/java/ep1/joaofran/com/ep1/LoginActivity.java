@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import lib.User;
 import tasks.GetTask;
 import tasks.LoginTask;
 
@@ -23,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
 
         login = (EditText) findViewById(R.id.etNUSP);
         password = (EditText) findViewById(R.id.etPassword);
-//        setContentView(R.layout.activity_teacher);
     }
 
     public void login (View view) {
@@ -35,8 +35,9 @@ public class LoginActivity extends AppCompatActivity {
         // Fazer login no webservice new GetTask().execute("teacher");
         if (true) {
             //Succsess
+
             Intent intent = new Intent (view.getContext(), ProfileActivity.class);
-            // Mandar de alguma forma informação se é aluno ou professor, Jason mais uma variavel de identificação?
+            intent.putExtra(Intent.EXTRA_TEXT, "1234567T");
             startActivity(intent);
         }
         else {
