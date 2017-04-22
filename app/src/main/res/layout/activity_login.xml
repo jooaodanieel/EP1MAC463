@@ -52,7 +52,18 @@
         android:padding="12dp"
         android:text="@string/login"
         android:textColorLink="@android:color/darker_gray"
-        android:onClick="onClick" />
+        android:onClick="login" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLinkSignUp"
+        android:text="@string/linkSignUp"
+        android:layout_marginBottom="24dp"
+        android:layout_gravity="center"
+        android:textColor="@android:color/holo_blue_light"
+        android:clickable="true"
+        android:onClick="linkSignUp"/>
 
 
 

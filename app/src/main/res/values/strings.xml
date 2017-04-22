@@ -3,4 +3,5 @@
     <string name="login">Login</string>
     <string name="NUSP_hint">NUSP</string>
     <string name="Pass_hint">Password</string>
+    <string name="linkSignUp">Create account</string>
 </resources>

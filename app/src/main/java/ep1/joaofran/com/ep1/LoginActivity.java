@@ -1,5 +1,6 @@
 package ep1.joaofran.com.ep1;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,19 +19,35 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_login);
-//
-//        login = (EditText) findViewById(R.id.etNUSP);
-//        password = (EditText) findViewById(R.id.etPassword);
-        setContentView(R.layout.activity_teacher);
+        setContentView(R.layout.activity_login);
+
+        login = (EditText) findViewById(R.id.etNUSP);
+        password = (EditText) findViewById(R.id.etPassword);
+//        setContentView(R.layout.activity_teacher);
     }
 
-    public void onClick (View view) {
+    public void login (View view) {
         String l = login.getText().toString();
         String p = password.getText().toString();
 
-        Log.d(TAG, "Botão clicked");
+        Log.d(TAG, "Button clicked");
 
-        new GetTask().execute("teacher");
+        // Fazer login no webservice new GetTask().execute("teacher");
+        if (true) {
+            //Succsess
+            Intent intent = new Intent (view.getContext(), ProfileActivity.class);
+            // Mandar de alguma forma informação se é aluno ou professor, Jason mais uma variavel de identificação?
+            startActivity(intent);
+        }
+        else {
+            // Faliure
+            // Mensagem de erro, Toast??
+        }
     }
+
+    public void linkSignUp (View view) {
+        Intent intent = new Intent(view.getContext(), SignUpActivity.class);
+        startActivity(intent);
+    }
+
 }
