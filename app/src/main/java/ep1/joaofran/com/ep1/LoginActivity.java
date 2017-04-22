@@ -18,10 +18,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        login = (EditText) findViewById(R.id.etNUSP);
-        password = (EditText) findViewById(R.id.etPassword);
+//        setContentView(R.layout.activity_login);
+//
+//        login = (EditText) findViewById(R.id.etNUSP);
+//        password = (EditText) findViewById(R.id.etPassword);
+        setContentView(R.layout.activity_teacher);
     }
 
     public void onClick (View view) {

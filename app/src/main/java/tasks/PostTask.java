@@ -35,7 +35,7 @@ public class PostTask extends AsyncTask<String, Void, Boolean> {
             Log.d(TAG, "in Background " + this.url);
             HttpURLConnection urlConnection = (HttpURLConnection) new URL(this.url).openConnection();
 
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream();
+            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
 
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -51,6 +51,8 @@ public class PostTask extends AsyncTask<String, Void, Boolean> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 
     
