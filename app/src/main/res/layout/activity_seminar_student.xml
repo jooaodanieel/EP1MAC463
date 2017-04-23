@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ep1.joaofran.com.ep1.SeminarActivity"
+    android:orientation="vertical"
+    android:paddingTop="50dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp" >
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etSeminarName"
+        android:textStyle="bold"
+        android:textSize="35dp"
+        android:layout_marginBottom="25dp"
+        android:textColor="@android:color/darker_gray"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvConfirm"
+        android:text="@string/Confirm"
+        android:layout_gravity="center"
+        android:layout_above="@+id/etSeminarName"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+
+        android:textSize="20dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bntQRCode"
+        android:layout_above="@+id/tvConfirm"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"
+        android:text="QR Code"
+       />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bntNFC"
+        android:layout_above="@+id/bntQRCode"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"
+        android:text="NFC"
+        />
+
+
+</LinearLayout>

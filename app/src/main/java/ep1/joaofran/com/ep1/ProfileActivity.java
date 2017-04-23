@@ -3,7 +3,10 @@ package ep1.joaofran.com.ep1;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -29,10 +32,11 @@ public class ProfileActivity extends AppCompatActivity {
         seminars.add(new Seminar(3, "c"));
         seminars.add(new Seminar(4, "d"));
 
+
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        String extra = intent.getStringExtra(Intent.EXTRA_TEXT);
+        final String extra = intent.getStringExtra(Intent.EXTRA_TEXT);
 
         User user = new User("EU", "1234567", "123", extra.charAt(7) == 'S');
 
@@ -44,10 +48,22 @@ public class ProfileActivity extends AppCompatActivity {
             setContentView(R.layout.activity_teacher);
             this.seminars_list = (ListView) findViewById(R.id.lvTeacherSeminar);
         }
-        Log.d (TAG, "In profile activity");
+
 
 
         adapter = new ArrayAdapter<Seminar>(this, R.layout.row, R.id.tvSeminar, this.seminars);
+        seminars_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent item_click = new Intent(ProfileActivity.this, SeminarActivity.class);
+                item_click.putExtra(Intent.EXTRA_TEXT, extra);
+                startActivity(item_click);
+            }
+
+        });
+
         this.seminars_list.setAdapter(adapter);
+        Log.d (TAG, "In profile activity");
     }
 }

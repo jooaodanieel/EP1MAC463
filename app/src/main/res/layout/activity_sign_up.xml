@@ -73,6 +73,6 @@
         android:layout_gravity="center"
         android:textColor="@android:color/holo_blue_light"
         android:clickable="true"
-        android:onClick=""/>
+        android:onClick="linkLogin"/>
 
 </LinearLayout>

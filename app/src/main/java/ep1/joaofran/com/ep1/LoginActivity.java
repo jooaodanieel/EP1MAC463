@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
             //Succsess
 
             Intent intent = new Intent (view.getContext(), ProfileActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT, "1234567T");
+            intent.putExtra(Intent.EXTRA_TEXT, "1234567S");
             startActivity(intent);
         }
         else {

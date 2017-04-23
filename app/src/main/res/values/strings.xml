@@ -7,4 +7,5 @@
     <string name="signup">Sign Up</string>
     <string name="linkLogin">Already have an account? Log In</string>
     <string name="Name_hint">Name</string>
+    <string name="Confirm">Confirm Participation:</string>
 </resources>
