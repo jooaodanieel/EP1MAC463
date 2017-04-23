@@ -7,10 +7,13 @@
     <string name="signup">Sign Up</string>
     <string name="linkLogin">Already have an account? Log In</string>
     <string name="name_hint">Name</string>
-    <string name="confirm">Confirm Participation:</string>
+    <string name="enroll">Enroll:</string>
     <string name="newSeminar">New Seminar</string>
     <string name="OK">OK</string>
     <string name="cancel">Cancel</string>
     <string name="login_fail">Log In failed. Try again</string>
     <string name="delete_seminar">Delete</string>
+    <string name="seminars_participants">All students enrolled:</string>
+    <string name="qrcode_info">Scan a QR Code to enroll in this seminar.</string>
+    <string name="nfc_info">Enroll via NFC connection.</string>
 </resources>

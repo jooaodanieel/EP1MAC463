@@ -5,7 +5,10 @@
     android:orientation="vertical"
     android:paddingTop="50dp"
     android:paddingLeft="24dp"
-    android:paddingRight="24dp" >
+    android:paddingRight="24dp"
+    android:weightSum="1"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
 
     <EditText
         android:layout_width="wrap_content"
@@ -14,20 +17,32 @@
         android:textStyle="bold"
         android:textSize="35dp"
         android:layout_marginBottom="25dp"
+        android:maxHeight="70dp"
         />
-
-    <ListView
-        android:id="@+id/lvStudents"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ListView>
 
     <Button
         android:id="@+id/button"
-        android:layout_width="335dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_light"
         android:text="@string/delete_seminar"
         android:textColor="@android:color/white"
-        android:background="@android:color/holo_red_light"/>
+        android:layout_marginBottom="25dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/seminars_participants"
+        android:textColor="@android:color/black"
+        android:layout_gravity="start"
+        android:textSize="20dp"/>
+
+    <ListView
+        android:id="@+id/lvStudents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"></ListView>
+
 
 
 
