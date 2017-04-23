@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private static final String TAG = "SIGNUP";
+    private static final String TAG = "SignUpActivity";
 
     private EditText name;
     private EditText login;
@@ -21,18 +21,22 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        Log.d (TAG, "In SignUP activity");
+        Log.d (TAG, "In SignUp activity");
     }
 
     public void signUp(View view) {
 
         // Sign up no webserver
 
+        Log.d (TAG, "Sign Up successfull");
+
         Intent intent = new Intent(view.getContext(), ProfileActivity.class);
         startActivity(intent);
     }
 
     public void linkLogin(View view) {
+        Log.d(TAG, "To Login activity");
+
         Intent intent = new Intent(view.getContext(), LoginActivity.class);
         startActivity(intent);
     }
