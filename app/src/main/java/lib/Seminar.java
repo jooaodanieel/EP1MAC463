@@ -5,6 +5,9 @@ package lib;
  */
 
 public class Seminar {
+
+    public static final String ID = "SEMINAR_ID";
+
     private Integer id;
     private String name;
 

@@ -37,7 +37,8 @@ public class LoginActivity extends AppCompatActivity {
             //Succsess
 
             Intent intent = new Intent (view.getContext(), ProfileActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT, "1234567S");
+            intent.putExtra(User.ID, "1234567");
+            intent.putExtra(User.TYPE, false);
             startActivity(intent);
         }
         else {

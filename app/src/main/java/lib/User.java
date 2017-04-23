@@ -8,6 +8,10 @@ import android.os.Parcelable;
  */
 
 public class User {
+
+    public static final String ID = "USER_ID";
+    public static final String TYPE = "USER_TYPE";
+
     private String name;
     private String NUSP;
     private String password;

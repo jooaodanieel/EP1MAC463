@@ -39,9 +39,8 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        String extra = intent.getStringExtra(Intent.EXTRA_TEXT);
 
-        User user = new User("EU", "1234567", "123", extra.charAt(7) == 'S');
+        User user = new User("EU", intent.getStringExtra(User.ID), "123", intent.getBooleanExtra(User.TYPE, true));
 
         if (user.isStudent()) {
             setContentView(R.layout.activity_student);
@@ -52,12 +51,12 @@ public class ProfileActivity extends AppCompatActivity {
             this.seminars_list = (ListView) findViewById(R.id.lvTeacherSeminar);
         }
 
-        listSetup(user, extra);
+        listSetup(user);
     }
 
-    private void listSetup(User user, String ex) {
+    private void listSetup(User u) {
 
-        final String extra = ex;
+        final User user = u;
 
         adapter = new ArrayAdapter<Seminar>(this, R.layout.row, R.id.tvSeminar, this.seminars);
         seminars_list.setAdapter(adapter);
@@ -67,7 +66,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent item_click = new Intent(ProfileActivity.this, SeminarActivity.class);
-                item_click.putExtra(Intent.EXTRA_TEXT, extra);
+                item_click.putExtra(User.ID, user.getNUSP());
+                item_click.putExtra(User.TYPE, user.isStudent());
+                item_click.putExtra(Seminar.ID, seminars.get(position).getName());
                 startActivity(item_click);
             }
 

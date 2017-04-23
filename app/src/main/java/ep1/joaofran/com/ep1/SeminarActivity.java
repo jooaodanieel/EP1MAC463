@@ -3,11 +3,17 @@ package ep1.joaofran.com.ep1;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import lib.Seminar;
+import lib.User;
 
 public class SeminarActivity extends AppCompatActivity {
 
-    private EditText seminar_name;
+    private EditText et_seminar_name;
+    private TextView tv_seminar_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,14 +21,15 @@ public class SeminarActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String extra = intent.getStringExtra(Intent.EXTRA_TEXT);
-
-        if (extra.charAt(7) == 'S')
+        if (intent.getBooleanExtra(User.TYPE, true)) {
             setContentView(R.layout.activity_seminar_student);
+            tv_seminar_name = (TextView) findViewById(R.id.tvSeminarName);
+            tv_seminar_name.setText(intent.getStringExtra(Seminar.ID));
+        }
         else {
             setContentView(R.layout.activity_seminar_teacher);
-            seminar_name = (EditText) findViewById(R.id.etSeminarName);
-            seminar_name.setText("Palestra do Zé");
+            et_seminar_name = (EditText) findViewById(R.id.etSeminarName);
+            et_seminar_name.setText(intent.getStringExtra(Seminar.ID));
         }
 
     }
