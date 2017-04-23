@@ -6,6 +6,9 @@
     <string name="linkSignUp">Create account</string>
     <string name="signup">Sign Up</string>
     <string name="linkLogin">Already have an account? Log In</string>
-    <string name="Name_hint">Name</string>
-    <string name="Confirm">Confirm Participation:</string>
+    <string name="name_hint">Name</string>
+    <string name="confirm">Confirm Participation:</string>
+    <string name="newSeminar">New Seminar</string>
+    <string name="OK">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

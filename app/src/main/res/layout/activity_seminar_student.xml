@@ -10,23 +10,22 @@
     android:paddingLeft="24dp"
     android:paddingRight="24dp" >
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etSeminarName"
+        android:id="@+id/tvSeminarName"
         android:textStyle="bold"
         android:textSize="35dp"
         android:layout_marginBottom="25dp"
-        android:textColor="@android:color/darker_gray"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvConfirm"
-        android:text="@string/Confirm"
+        android:text="@string/confirm"
         android:layout_gravity="center"
-        android:layout_above="@+id/etSeminarName"
+        android:layout_above="@+id/tvSeminarName"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
 

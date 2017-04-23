@@ -28,7 +28,7 @@
         android:layout_above="@+id/etInsertPassword"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:hint="@string/Name_hint"
+        android:hint="@string/name_hint"
         android:inputType="textPersonName" />
 
     <EditText

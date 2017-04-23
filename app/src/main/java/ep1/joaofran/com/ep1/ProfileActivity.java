@@ -1,6 +1,7 @@
 package ep1.joaofran.com.ep1;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.internal.widget.AdapterViewCompat;
@@ -8,7 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.content.DialogInterface;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        final String extra = intent.getStringExtra(Intent.EXTRA_TEXT);
+        String extra = intent.getStringExtra(Intent.EXTRA_TEXT);
 
         User user = new User("EU", "1234567", "123", extra.charAt(7) == 'S');
 
@@ -49,9 +52,16 @@ public class ProfileActivity extends AppCompatActivity {
             this.seminars_list = (ListView) findViewById(R.id.lvTeacherSeminar);
         }
 
+        listSetup(user, extra);
+    }
 
+    private void listSetup(User user, String ex) {
+
+        final String extra = ex;
 
         adapter = new ArrayAdapter<Seminar>(this, R.layout.row, R.id.tvSeminar, this.seminars);
+        seminars_list.setAdapter(adapter);
+
         seminars_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -62,8 +72,33 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
         });
+    }
 
-        this.seminars_list.setAdapter(adapter);
-        Log.d (TAG, "In profile activity");
+    public void addSeminar(View view) {
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle(R.string.newSeminar);
+
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Insere na lista
+                // Post seminar
+                // get seminar
+                Seminar sem = new Seminar(19, input.getText().toString());
+                seminars.add(0, sem);
+            }
+        });
+
+        alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Cancelado
+            }
+        });
+
+        alert.show();
     }
 }

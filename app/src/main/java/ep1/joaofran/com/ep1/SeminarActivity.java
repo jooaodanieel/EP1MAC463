@@ -19,10 +19,11 @@ public class SeminarActivity extends AppCompatActivity {
 
         if (extra.charAt(7) == 'S')
             setContentView(R.layout.activity_seminar_student);
-        else
+        else {
             setContentView(R.layout.activity_seminar_teacher);
+            seminar_name = (EditText) findViewById(R.id.etSeminarName);
+            seminar_name.setText("Palestra do Zé");
+        }
 
-        seminar_name = (EditText) findViewById(R.id.etSeminarName);
-        seminar_name.setText("Palestra do Zé");
     }
 }

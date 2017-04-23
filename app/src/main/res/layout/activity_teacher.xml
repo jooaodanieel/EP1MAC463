@@ -22,7 +22,8 @@
         app:layout_anchorGravity="bottom|right|end"
         app:borderWidth="0dp"
         android:src="@drawable/ic_add_black_24dp"
-        android:tint="@android:color/white"/>
+        android:tint="@android:color/white"
+        android:onClick="addSeminar"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
