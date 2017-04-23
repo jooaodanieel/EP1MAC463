@@ -40,4 +40,6 @@ public class SeminarActivity extends AppCompatActivity {
         }
 
     }
+
+    // On destroy ou no stop verificar se precisa editar o Seminário
 }

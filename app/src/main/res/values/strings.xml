@@ -12,4 +12,5 @@
     <string name="OK">OK</string>
     <string name="cancel">Cancel</string>
     <string name="login_fail">Log In failed. Try again</string>
+    <string name="delete_seminar">Delete</string>
 </resources>

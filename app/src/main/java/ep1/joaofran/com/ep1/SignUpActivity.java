@@ -31,6 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
         Log.d (TAG, "Sign Up successfull");
 
         Intent intent = new Intent(view.getContext(), ProfileActivity.class);
+        //Mandar informações do usuário
         startActivity(intent);
     }
 
