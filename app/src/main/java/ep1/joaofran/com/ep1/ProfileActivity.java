@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.content.DialogInterface;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -105,6 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 Seminar sem = new Seminar(19, input.getText().toString());
                 seminars.add(0, sem);
+                Toast.makeText(getApplicationContext(),sem + " criado com sucesso!",Toast.LENGTH_LONG).show();
             }
         });
 
