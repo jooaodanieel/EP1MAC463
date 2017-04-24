@@ -21,6 +21,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        setTitle(R.string.signup_title);
+
         Log.d (TAG, "In SignUp activity");
     }
 

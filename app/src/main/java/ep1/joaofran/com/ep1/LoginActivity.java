@@ -23,6 +23,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        setTitle(R.string.login_title);
+
+
         Log.d (TAG, "In Login activity");
 
         et_login = (EditText) findViewById(R.id.etNUSP);

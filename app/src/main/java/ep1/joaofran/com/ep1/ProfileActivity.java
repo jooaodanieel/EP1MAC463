@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.internal.widget.AdapterViewCompat;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,9 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.content.DialogInterface;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import lib.Seminar;
 import lib.User;
@@ -28,8 +27,28 @@ public class ProfileActivity extends AppCompatActivity {
     private ArrayList<Seminar> seminars;
     private ArrayAdapter adapter;
 
+    // Action Bar
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        switch (item.getItemId()) {
+            case (R.id.itLogOut):
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle(R.string.profile_title);
         // Exemple
         seminars = new ArrayList<Seminar>();
         seminars.add(new Seminar(1, "a"));

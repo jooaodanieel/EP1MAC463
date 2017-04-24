@@ -16,4 +16,8 @@
     <string name="seminars_participants">All students enrolled:</string>
     <string name="qrcode_info">Scan a QR Code to enroll in this seminar.</string>
     <string name="nfc_info">Enroll via NFC connection.</string>
+    <string name="signup_title">Welcome</string>
+    <string name="login_title">Welcome back</string>
+    <string name="profile_title">All Seminars</string>
+    <string name="seminar_title">Seminar Info</string>
 </resources>
