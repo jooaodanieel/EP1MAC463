@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -14,7 +15,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText name;
     private EditText login;
     private EditText password;
-
+    private RadioGroup type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void signUp(View view) {
 
         // Sign up no webserver
+        //getCheckedRadioButtonId()
 
         Log.d (TAG, "Sign Up successfull");
 

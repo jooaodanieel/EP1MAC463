@@ -53,6 +53,36 @@
         android:hint="@string/Pass_hint"
         android:inputType="textPassword" />
 
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:checkedButton="@+id/rbStudent"
+        android:layout_gravity="center"
+        >
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbStudent"
+            android:text="@string/student"
+            android:buttonTint="@android:color/darker_gray"
+            android:textColor="@android:color/darker_gray"
+            android:layout_margin="10dp"
+        />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbTeacer"
+            android:text="@string/teacher"
+            android:buttonTint="@android:color/darker_gray"
+            android:textColor="@android:color/darker_gray"
+            android:layout_margin="10dp"
+            />
+    </RadioGroup>
+
+
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
