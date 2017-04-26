@@ -46,6 +46,7 @@
             android:layout_gravity="center"
             android:text="QR Code"
             android:background="@android:color/holo_green_light"
+            android:onClick="scanQR"
             />
 
         <TextView

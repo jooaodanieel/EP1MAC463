@@ -101,7 +101,8 @@ public class ProfileActivity extends AppCompatActivity {
                 Intent item_click = new Intent(ProfileActivity.this, SeminarActivity.class);
                 item_click.putExtra(User.ID, u_num);
                 item_click.putExtra(User.TYPE, u_student);
-                item_click.putExtra(Seminar.ID, seminars.get(position).getName());
+                item_click.putExtra(Seminar.ID, seminars.get(position).getId().toString());
+                item_click.putExtra(Seminar.NAME, seminars.get(position).getName());
                 startActivity(item_click);
             }
 
@@ -137,4 +138,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         alert.show();
     }
+
+
+
+
 }

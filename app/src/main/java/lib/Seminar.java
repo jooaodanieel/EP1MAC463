@@ -7,6 +7,7 @@ package lib;
 public class Seminar {
 
     public static final String ID = "SEMINAR_ID";
+    public static final String NAME = "SEMINAR_NAME";
 
     private Integer id;
     private String name;

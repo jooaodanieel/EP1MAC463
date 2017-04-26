@@ -37,6 +37,11 @@
         android:layout_gravity="start"
         android:textSize="20dp"/>
 
+    <ImageView
+        android:id="@+id/ivQrcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <ListView
         android:id="@+id/lvStudents"
         android:layout_width="match_parent"
