@@ -1,14 +1,20 @@
 package ep1.joaofran.com.ep1;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +32,8 @@ public class SeminarActivity extends AppCompatActivity {
 
     private EditText et_seminar_name;
     private TextView tv_seminar_name;
+    private String seminar_id;
+    private Bitmap bitmap = null;
 
     // Action Bar
     @Override
@@ -39,10 +47,12 @@ public class SeminarActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case (R.id.itLogOut):
                 Intent intent = new Intent(SeminarActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
-            case (R.id.itBack):
+            case android.R.id.home:
                 this.finish();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -51,8 +61,13 @@ public class SeminarActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTitle(R.string.seminar_title);
         super.onCreate(savedInstanceState);
+
+        // ActionBar setup
+        setTitle(R.string.seminar_title);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         Intent intent = getIntent();
 
@@ -69,19 +84,46 @@ public class SeminarActivity extends AppCompatActivity {
             setContentView(R.layout.activity_seminar_teacher);
             et_seminar_name = (EditText) findViewById(R.id.etSeminarName);
             et_seminar_name.setText(intent.getStringExtra(Seminar.NAME));
-            genQR(intent.getStringExtra(Seminar.ID));
+            seminar_id = intent.getStringExtra(Seminar.ID);
         }
 
     }
 
-    public void genQR (String s) {
-        ImageView imageView = (ImageView) findViewById(R.id.ivQrcode);
+    public void showQR(View view) {
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle(R.string.qrcode);
+
+        final ImageView imageView = new ImageView(this);
+        if (bitmap == null)
+            bitmap = generateQR(seminar_id);
+        imageView.setImageBitmap(bitmap);
+        alert.setView(imageView);
+
+        alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Cancelado
+            }
+        });
+
+        alert.show();
+    }
+
+
+    public Bitmap generateQR (String s) {
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
 
         try {
-            Bitmap bitmap = QRCodeManager.generate(s, 1000);
-            imageView.setImageBitmap(bitmap);
+            Bitmap bitmap = QRCodeManager.generate(s, width);
+            return bitmap;
         } catch (WriterException e) {
             e.printStackTrace();
+            return null;
         }
     }
 

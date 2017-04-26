@@ -22,4 +22,6 @@
     <string name="seminar_title">Seminar Info</string>
     <string name="student">Student</string>
     <string name="teacher">Teacher</string>
+    <string name="qrcode">QR Code</string>
+    <string name="generatingQR">Generating QR Code ... Please wait</string>
 </resources>

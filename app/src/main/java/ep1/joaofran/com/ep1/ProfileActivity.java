@@ -40,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case (R.id.itLogOut):
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
         }
