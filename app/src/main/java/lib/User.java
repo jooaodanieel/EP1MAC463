@@ -53,4 +53,9 @@ public class User {
     public Boolean isStudent() {
        return this.student;
     }
+
+    @Override
+    public String toString () {
+        return (this.name + " - " + this.NUSP);
+    }
 }

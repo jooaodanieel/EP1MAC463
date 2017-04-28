@@ -95,14 +95,14 @@ public class ProfileActivity extends AppCompatActivity {
     private void listSetup(String num, Boolean student) {
         Log.d(TAG, "Setting up seminar list");
 
-        Toast.makeText(this,"Retrieving seminar list...", Toast.LENGTH_LONG).show();
+        Toast.makeText(this,R.string.seminars_retrieval, Toast.LENGTH_LONG).show();
 
         final String u_num = num;
         final Boolean u_student = student;
 
         this.seminars = new ArrayList<>();
 
-        adapter = new ArrayAdapter<>(this, R.layout.row, R.id.tvSeminar, this.seminars);
+        adapter = new ArrayAdapter<>(this, R.layout.seminar_row, R.id.tvSeminar, this.seminars);
         seminars_list.setAdapter(adapter);
 
         seminars_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -156,11 +156,8 @@ public class ProfileActivity extends AppCompatActivity {
                 params.put("name",input.getText().toString());
                 StringRequest POSTRequest = factory.POSTNewSeminarRequest(view.getContext(),params);
                 VolleySingleton.getInstance(view.getContext()).addToRequestQueue(POSTRequest);
+                recreate();
 
-                // lista no WS foi alterada, então:
-                seminars = new ArrayList<>();
-                JsonObjectRequest GETRequest = factory.GETSeminarList(seminars,adapter,TAG);
-                VolleySingleton.getInstance(view.getContext()).addToRequestQueue(GETRequest);
             }
         });
 

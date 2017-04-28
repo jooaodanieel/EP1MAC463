@@ -14,26 +14,43 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.google.zxing.WriterException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import lib.QRCodeManager;
+import lib.RequestFactory;
 import lib.Seminar;
 import lib.User;
+import lib.VolleySingleton;
 
 public class SeminarActivity extends AppCompatActivity {
 
     private static final String TAG = "SeminarActivity";
 
-    private EditText et_seminar_name;
+
     private TextView tv_seminar_name;
     private String seminar_id;
     private Bitmap bitmap = null;
+
+    // Elementos da activity de um professor
+    private EditText et_seminar_name;
+    private ListView students_list;
+    private ArrayList<String> students;
+    private ArrayAdapter adapter;
+    private final RequestFactory factory = new RequestFactory();
 
     // Action Bar
     @Override
@@ -76,7 +93,7 @@ public class SeminarActivity extends AppCompatActivity {
 
             setContentView(R.layout.activity_seminar_student);
             tv_seminar_name = (TextView) findViewById(R.id.tvSeminarName);
-            tv_seminar_name.setText(intent.getStringExtra(Seminar.ID));
+            tv_seminar_name.setText(intent.getStringExtra(Seminar.NAME));
         }
         else {
             Log.d(TAG, "In Seminar activity: Teacher");
@@ -85,8 +102,24 @@ public class SeminarActivity extends AppCompatActivity {
             et_seminar_name = (EditText) findViewById(R.id.etSeminarName);
             et_seminar_name.setText(intent.getStringExtra(Seminar.NAME));
             seminar_id = intent.getStringExtra(Seminar.ID);
+            listSetup();
+
         }
 
+    }
+
+    private void listSetup () {
+        students_list = (ListView) findViewById(R.id.lvStudents);
+        students = new ArrayList<>();
+
+        adapter = new ArrayAdapter(this, R.layout.student_row, R.id.tvStudent, this.students);
+        students_list.setAdapter(adapter);
+
+        //POST
+        Map<String,String> params = new HashMap<>();
+        params.put("seminar_id",seminar_id);
+        JsonObjectRequest POSTRequest = factory.POSTStudentList(SeminarActivity.this,params, students, adapter);
+        VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(POSTRequest);
     }
 
     public void showQR(View view) {

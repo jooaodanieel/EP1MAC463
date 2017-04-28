@@ -24,4 +24,7 @@
     <string name="teacher">Teacher</string>
     <string name="qrcode">QR Code</string>
     <string name="generatingQR">Generating QR Code ... Please wait</string>
+    <string name="seminar_created_succsess">created</string>
+    <string name="seminar_created_faliure">Error creating new seminar</string>
+    <string name="seminars_retrieval">Retrieving seminar list...</string>
 </resources>
