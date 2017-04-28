@@ -150,11 +150,14 @@ public class ProfileActivity extends AppCompatActivity {
         alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
+                // Entender como atribuir PRIORIDADES às requests
+                // POST precisa ser feito antes do GET
                 Map<String,String> params = new HashMap<>();
                 params.put("name",input.getText().toString());
                 StringRequest POSTRequest = factory.POSTNewSeminarRequest(view.getContext(),params);
                 VolleySingleton.getInstance(view.getContext()).addToRequestQueue(POSTRequest);
 
+                // lista no WS foi alterada, então:
                 seminars = new ArrayList<>();
                 JsonObjectRequest GETRequest = factory.GETSeminarList(seminars,adapter,TAG);
                 VolleySingleton.getInstance(view.getContext()).addToRequestQueue(GETRequest);

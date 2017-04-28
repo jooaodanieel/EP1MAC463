@@ -46,8 +46,6 @@ public class RequestFactory {
         }
     }
 
-    // verificar como incluir prioridade à request e fazer um overload
-    // (outro recebe prioridadade como parâmetro)
     public JsonObjectRequest GETSeminarList (final List<Seminar> seminars, final ArrayAdapter adapter, final String debugTag) {
         String url = this.base_url + "seminar";
         return new JsonObjectRequest(Request.Method.GET, url, null,
@@ -63,21 +61,6 @@ public class RequestFactory {
             }
         });
     }
-
-//    String GETurl = "http://207.38.82.139:8001/seminar";
-//    final JsonObjectRequest GETrequest = new JsonObjectRequest(Request.Method.GET, GETurl, null,
-//            new Response.Listener<JSONObject>() {
-//                @Override
-//                public void onResponse(JSONObject response) {
-//                    treatRequestResponse(response,adapter);
-//                }
-//            }, new Response.ErrorListener() {
-//        @Override
-//        public void onErrorResponse(VolleyError error) {
-//            Log.d(TAG,"JSONRequest failed");
-//        }
-//    });
-
 
     // para clareza: gera uma request mas NÃO ZERA a lista de Seminars atual
     public StringRequest POSTNewSeminarRequest (final Context context, final Map<String,String> params) {
@@ -101,28 +84,4 @@ public class RequestFactory {
         };
     }
 
-//    String post_url = "http://207.38.82.139:8001/seminar/add";
-//    StringRequest POSTrequest = new StringRequest(Request.Method.POST, post_url,
-//            new Response.Listener<String>() {
-//                @Override
-//                public void onResponse(String response) {
-//                    Log.d(TAG,response);
-//                    Toast.makeText(getApplicationContext(),input.getText().toString() + " criado com sucesso!",Toast.LENGTH_LONG).show();
-//                    seminars = new ArrayList<>();
-//                    VolleySingleton.getInstance(view.getContext()).addToRequestQueue(GETrequest);
-//                }
-//            }, new Response.ErrorListener() {
-//        @Override
-//        public void onErrorResponse(VolleyError error) {
-//            Log.d(TAG, String.valueOf(error));
-//        }
-//    }){
-//        @Override
-//        protected Map<String, String> getParams() throws AuthFailureError {
-//            Map<String,String> params = new HashMap<>();
-//            params.put("name",input.getText().toString());
-//
-//            return params;
-//        }
-//    };
 }
