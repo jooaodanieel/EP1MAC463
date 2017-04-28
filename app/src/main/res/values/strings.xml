@@ -27,4 +27,6 @@
     <string name="seminar_created_succsess">created</string>
     <string name="seminar_created_faliure">Error creating new seminar</string>
     <string name="seminars_retrieval">Retrieving seminar list...</string>
+    <string name="students_retrieval">Retrieving student list...</string>
+    <string name="empty_student_list">No students enrolled in this seminar yet.</string>
 </resources>
