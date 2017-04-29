@@ -158,6 +158,27 @@ public class RequestFactory {
         };
     }
 
+    public StringRequest POSTEditSeminar(final Map<String, String> params) {
+        String url = base_url + "seminar/edit";
+        return new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("POSTEditSeminar", "edit succsess");
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("POSTEditSeminar", "edit failure");
+            }
+        }) {
+            @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    return params;
+            }
+        };
+    }
+
     //    public StringRequest POSTNewStudent (final Context context, final Map<String,String> params) {
     //        String url = this.base_url + "student/add";
     //        return new StringRequest(Request.Method.POST, url,

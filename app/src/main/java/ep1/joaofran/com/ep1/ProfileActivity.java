@@ -2,6 +2,8 @@ package ep1.joaofran.com.ep1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +68,9 @@ public class ProfileActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
+            case (R.id.refresh):
+                recreate();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -101,6 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         listSetup(u_num, u_student);
     }
+
 
     private void listSetup(String num, Boolean student) {
         Log.d(TAG, "Setting up seminar list");

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">EP1</string>
     <string name="login">Login</string>
+    <string name="logout">Log out</string>
+    <string name="refresh">Refresh</string>
     <string name="NUSP_hint">NUSP</string>
     <string name="Pass_hint">Password</string>
     <string name="linkSignUp">Create account</string>

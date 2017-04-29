@@ -49,6 +49,8 @@ public class SeminarActivity extends AppCompatActivity {
 
     private TextView tv_seminar_name;
     private String seminar_id;
+    private String seminar_name;
+    private Boolean is_student;
     private Bitmap bitmap = null;
 
     // Elementos da activity de um professor
@@ -93,25 +95,44 @@ public class SeminarActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
+        is_student = intent.getBooleanExtra(User.TYPE, true);
+        seminar_name = intent.getStringExtra(Seminar.NAME);
 
-        if (intent.getBooleanExtra(User.TYPE, true)) {
+        if (is_student) {
             Log.d(TAG, "In Seminar activity: Student");
 
             setContentView(R.layout.activity_seminar_student);
             tv_seminar_name = (TextView) findViewById(R.id.tvSeminarName);
-            tv_seminar_name.setText(intent.getStringExtra(Seminar.NAME));
+            tv_seminar_name.setText(seminar_name);
         }
         else {
             Log.d(TAG, "In Seminar activity: Teacher");
 
             setContentView(R.layout.activity_seminar_teacher);
             et_seminar_name = (EditText) findViewById(R.id.etSeminarName);
-            et_seminar_name.setText(intent.getStringExtra(Seminar.NAME));
+            et_seminar_name.setText(seminar_name);
             seminar_id = intent.getStringExtra(Seminar.ID);
             listSetup();
 
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Testar se mudar de nome antes de deletar da erro no POST
+        if(!is_student && (et_seminar_name.getText().toString() != seminar_name)) {
+            Log.d(TAG, "Seminario editado");
+
+            Map<String,String> params = new HashMap<>();
+            params.put("id",seminar_id);
+            params.put("name", et_seminar_name.getText().toString());
+            StringRequest request = factory.POSTEditSeminar(params);
+            VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(request);
+
+        }
     }
 
     public void deleteSeminar (View view) {
@@ -126,12 +147,9 @@ public class SeminarActivity extends AppCompatActivity {
         alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                // POST para delete
-                // mostrar ProfileActivity
-
                 Map<String,String> params = new HashMap<>();
                 params.put("id",seminar_id);
-                StringRequest request = factory.POSTDeleteSeminar(/*SeminarActivity.this, */params);
+                StringRequest request = factory.POSTDeleteSeminar(params);
                 VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(request);
 
                 startActivity(new Intent(SeminarActivity.this, ProfileActivity.class));
