@@ -1,6 +1,7 @@
 package ep1.joaofran.com.ep1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText et_login;
     private EditText et_password;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefs_editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
 
         et_login = (EditText) findViewById(R.id.etNUSP);
         et_password = (EditText) findViewById(R.id.etPassword);
+        prefs = getSharedPreferences(getString(R.string.shared_preferences_file),MODE_PRIVATE);
+        prefs_editor = prefs.edit();
     }
 
     public void login (View view) {
@@ -44,8 +49,11 @@ public class LoginActivity extends AppCompatActivity {
             Log.d(TAG, "Log In successful");
 
             Intent intent = new Intent (view.getContext(), ProfileActivity.class);
-            intent.putExtra(User.ID, login);
-            intent.putExtra(User.TYPE, false);
+//            intent.putExtra(User.ID, login);
+//            intent.putExtra(User.TYPE, false);
+            prefs_editor.putString(User.ID,login);
+            prefs_editor.putBoolean(User.TYPE,false);
+            prefs_editor.commit();
             startActivity(intent);
         }
         else {

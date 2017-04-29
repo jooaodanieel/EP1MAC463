@@ -9,6 +9,9 @@
     <string name="name_hint">Name</string>
     <string name="enroll">Enroll:</string>
     <string name="newSeminar">New Seminar</string>
+    <string name="deleteSeminar">Delete Seminar?</string>
+    <string name="deleteSeminarExplanation">You are about to delete this seminar. There is no going back. Are you sure you want to do this?</string>
+    <string name="seminar_delete_success">Seminar successfully deleted.</string>
     <string name="OK">OK</string>
     <string name="cancel">Cancel</string>
     <string name="login_fail">Log In failed. Try again</string>
@@ -29,4 +32,5 @@
     <string name="seminars_retrieval">Retrieving seminar list...</string>
     <string name="students_retrieval">Retrieving student list...</string>
     <string name="empty_student_list">No students enrolled in this seminar yet.</string>
+    <string name="shared_preferences_file">SHARED_PREFERENCES_FILE</string>
 </resources>

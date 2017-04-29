@@ -22,9 +22,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.zxing.WriterException;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,6 +114,47 @@ public class SeminarActivity extends AppCompatActivity {
 
     }
 
+    public void deleteSeminar (View view) {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle(R.string.deleteSeminar);
+
+        final TextView text = new TextView(this);
+        text.setText(R.string.deleteSeminarExplanation);
+        alert.setView(text);
+
+        alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                // POST para delete
+                // mostrar ProfileActivity
+
+                Map<String,String> params = new HashMap<>();
+                params.put("id",seminar_id);
+                StringRequest request = factory.POSTDeleteSeminar(SeminarActivity.this, params);
+                VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(request);
+
+//                poderia dar um new intent e startActivity(intent), mas aqui eu não tenho
+//                os valores de u_num, u_student (nem faz sentido ter)
+//                sharedPreferences? pode ser uma saída
+//                isso porque a ProfileActivity precisa ser reiniciada para atualizar a lista
+//                Intent intent = getIntent();
+//                String u_num = intent.getStringExtra(User.ID);
+//                Boolean u_student = intent.getBooleanExtra(User.TYPE, true);
+
+                finish();
+            }
+        });
+
+        alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Cancelado
+            }
+        });
+
+        alert.show();
+    }
+
     private void listSetup () {
         students_list = (ListView) findViewById(R.id.lvStudents);
         students = new ArrayList<>();
@@ -117,8 +164,8 @@ public class SeminarActivity extends AppCompatActivity {
 
         Toast.makeText(SeminarActivity.this, R.string.students_retrieval, Toast.LENGTH_SHORT);
         //POST
-        Map<String,String> params = new HashMap<>();
-        params.put("seminar_id",seminar_id);
+        final Map<String,String> params = new HashMap<>();
+        params.put("seminar_id", seminar_id);
         JsonObjectRequest POSTRequest = factory.POSTStudentList(SeminarActivity.this,params, students, adapter);
         VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(POSTRequest);
 

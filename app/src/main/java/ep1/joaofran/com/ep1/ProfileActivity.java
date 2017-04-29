@@ -1,6 +1,7 @@
 package ep1.joaofran.com.ep1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +46,9 @@ public class ProfileActivity extends AppCompatActivity {
     private ArrayAdapter adapter;
     private final RequestFactory factory = new RequestFactory();
 
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefs_editor;
+
 
     // Action Bar
     @Override
@@ -72,9 +76,15 @@ public class ProfileActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        String u_num = intent.getStringExtra(User.ID);
-        Boolean u_student = intent.getBooleanExtra(User.TYPE, true);
+        prefs = getSharedPreferences(getString(R.string.shared_preferences_file),MODE_PRIVATE);
+        prefs_editor = prefs.edit();
+
+//        Intent intent = getIntent();
+//        String u_num = intent.getStringExtra(User.ID);
+//        Boolean u_student = intent.getBooleanExtra(User.TYPE, true);
+
+        String u_num = prefs.getString(User.ID,"default");
+        Boolean u_student = prefs.getBoolean(User.TYPE,true);
 
         if (u_student) {
             Log.d(TAG, "In Profile activity: Student");

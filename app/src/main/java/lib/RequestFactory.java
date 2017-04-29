@@ -1,6 +1,7 @@
 package lib;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -19,9 +20,13 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Map;
 
+import ep1.joaofran.com.ep1.ProfileActivity;
 import ep1.joaofran.com.ep1.R;
+import ep1.joaofran.com.ep1.SeminarActivity;
+import ep1.joaofran.com.ep1.SignUpActivity;
 
 import static com.android.volley.VolleyLog.TAG;
+import static ep1.joaofran.com.ep1.R.string.login;
 
 /**
  * Created by joaofran on 27/04/17.
@@ -74,7 +79,7 @@ public class RequestFactory {
 
     public JsonObjectRequest POSTStudentList(final Context context, final  Map<String, String> params,
                                               final List<String> students, final ArrayAdapter adapter) {
-        Log.d("HERE", "in POSTStudentList");
+        Log.d("HERE", String.valueOf(params));
         String url = this.base_url + "attendence/listStudents";
         return new JsonObjectRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONObject>() {
@@ -88,14 +93,19 @@ public class RequestFactory {
             public void onErrorResponse(VolleyError error) {
                 Log.d("HERE", "POSTStudentList failed");
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+        };
     }
 
-    private void treatGETSeminarRequestResponse (JSONObject request, List<Seminar> seminars, ArrayAdapter adapter) {
+    private void treatGETSeminarRequestResponse (JSONObject response, List<Seminar> seminars, ArrayAdapter adapter) {
         try {
-            if (request != null) {
-                for (int i = 0; i < ((JSONArray) request.get("data")).length(); i++) {
-                    JSONObject jsob = ((JSONArray) request.get("data")).getJSONObject(i);
+            if (response != null) {
+                for (int i = 0; i < ((JSONArray) response.get("data")).length(); i++) {
+                    JSONObject jsob = ((JSONArray) response.get("data")).getJSONObject(i);
                     seminars.add(new Seminar(jsob.getInt("id"), jsob.getString("name")));
                     Log.d(TAG, "Added " + jsob.getInt("id") + jsob.getString("name"));
                 }
@@ -110,18 +120,67 @@ public class RequestFactory {
 
     private void treatPOSTStudentRequestResponse (JSONObject request, List<String> students, ArrayAdapter adapter) {
         Log.d("HERE", request.toString());
-        try {
+//        try {
             if (request != null) {
-                for (int i = 0; i < ((JSONArray) request.get("data")).length(); i++) {
-                    JSONObject jsob = ((JSONArray) request.get("data")).getJSONObject(i);
-                    students.add(jsob.getString("nusp"));
-                    Log.d("HERE", "Added " + jsob.getString("nusp"));
-                }
-                adapter.notifyDataSetChanged();
+                Log.d("ashusadu", String.valueOf(request));
+//                for (int i = 0; i < ((JSONArray) request.get("data")).length(); i++) {
+//                    JSONObject jsob = ((JSONArray) request.get("data")).getJSONObject(i);
+//                    students.add(jsob.getString("nusp"));
+//                    Log.d("HERE", "Added " + jsob.getString("nusp"));
+//                }
+//                adapter.notifyDataSetChanged();
             }
-        } catch (JSONException e) {
-            Log.e("HERE", String.valueOf(e.getStackTrace()));
-        }
+//        } catch (JSONException e) {
+//            Log.e("ashusadu", e.getMessage());
+//        }
     }
 
+
+    public StringRequest POSTDeleteSeminar (final Context context, final Map<String,String> params) {
+        String url = this.base_url + "seminar/delete";
+        return new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("POSTDeleteSeminar","delete success");
+                        context.startActivity(new Intent(context,ProfileActivity.class));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("POSTDeleteSeminar", "delete failed");
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+        };
+    }
+
+    //    public StringRequest POSTNewStudent (final Context context, final Map<String,String> params) {
+    //        String url = this.base_url + "student/add";
+    //        return new StringRequest(Request.Method.POST, url,
+    //                new Response.Listener<String>() {
+    //                    @Override
+    //                    public void onResponse(String response) {
+    //                        //
+    //                        Toast.makeText(context,R.string.new_user_success,Toast.LENGTH_SHORT).show();
+    //                        Intent intent = new Intent(context, ProfileActivity.class);
+    //                        intent.putExtra(User.ID, params.get());
+    //                        intent.putExtra(User.TYPE, true);
+    //                        context.startActivity(intent);
+    //                    }
+    //                }, new Response.ErrorListener() {
+    //            @Override
+    //            public void onErrorResponse(VolleyError error) {
+    //                //
+    //            }
+    //        }){
+    //            @Override
+    //            protected Map<String, String> getParams() throws AuthFailureError {
+    //                return params;
+    //            }
+    //        };
+    //    }
 }
