@@ -136,14 +136,14 @@ public class RequestFactory {
     }
 
 
-    public StringRequest POSTDeleteSeminar (final Context context, final Map<String,String> params) {
+    public StringRequest POSTDeleteSeminar (/*final Context context, */final Map<String,String> params) {
         String url = this.base_url + "seminar/delete";
         return new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.d("POSTDeleteSeminar","delete success");
-                        context.startActivity(new Intent(context,ProfileActivity.class));
+//                        context.startActivity(new Intent(context,ProfileActivity.class));
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -131,16 +131,10 @@ public class SeminarActivity extends AppCompatActivity {
 
                 Map<String,String> params = new HashMap<>();
                 params.put("id",seminar_id);
-                StringRequest request = factory.POSTDeleteSeminar(SeminarActivity.this, params);
+                StringRequest request = factory.POSTDeleteSeminar(/*SeminarActivity.this, */params);
                 VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(request);
 
-//                poderia dar um new intent e startActivity(intent), mas aqui eu não tenho
-//                os valores de u_num, u_student (nem faz sentido ter)
-//                sharedPreferences? pode ser uma saída
-//                isso porque a ProfileActivity precisa ser reiniciada para atualizar a lista
-//                Intent intent = getIntent();
-//                String u_num = intent.getStringExtra(User.ID);
-//                Boolean u_student = intent.getBooleanExtra(User.TYPE, true);
+                startActivity(new Intent(SeminarActivity.this, ProfileActivity.class));
 
                 finish();
             }
