@@ -286,4 +286,39 @@ public class RequestFactory {
             }
         };
     }
+
+    public StringRequest POSTEnroll (final Context context, final String user_id, final String seminar_id) {
+        final String TAG = "POSTEnroll";
+        String url = base_url + "attendence/submit";
+
+        final Map<String, String> params = new HashMap<>();
+
+        params.put("nusp", user_id);
+        params.put ("seminar_id", seminar_id);
+
+        return new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.contains("true")) {
+                            Log.d(TAG, "enroll success");
+                            Toast.makeText(context, R.string.enroll_success, Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Log.d(TAG, "enroll fail");
+                            Toast.makeText(context, R.string.enroll_fail, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d(TAG,error.getMessage());
+                }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+        };
+    }
 }

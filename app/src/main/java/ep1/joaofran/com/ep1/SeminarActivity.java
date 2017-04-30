@@ -104,6 +104,7 @@ public class SeminarActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         is_student = intent.getBooleanExtra(User.TYPE, true);
+        seminar_id = intent.getStringExtra(Seminar.ID);
         seminar_name = intent.getStringExtra(Seminar.NAME);
 
         if (is_student) {
@@ -245,11 +246,19 @@ public class SeminarActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                String contents = intent.getStringExtra("SCAN_RESULT");
+                String content = intent.getStringExtra("SCAN_RESULT");
+                if (Integer.parseInt(content) != Integer.parseInt(seminar_id)) {
+                    Toast.makeText(this, R.string.wrong_seminar, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Log.d(TAG, "Right seminar");
 
-                // Confirmar no webserver
-                Toast toast = Toast.makeText(this, "Content:" + contents, Toast.LENGTH_LONG);
-                toast.show();
+                    VolleySingleton.getInstance(this).addToRequestQueue(
+                            factory.POSTEnroll (this, prefs.getString(User.ID, "default"), seminar_id)
+                    );
+                }
+
+
             }
         }
     }

@@ -37,4 +37,7 @@
     <string name="shared_preferences_file">SHARED_PREFERENCES_FILE</string>
     <string name="incorrect_info">Invalid parameters</string>
     <string name="signup_fail">Sign Up failed. Try again</string>
+    <string name="wrong_seminar">Wrong seminar</string>
+    <string name="enroll_success">You are enrolled in this seminar</string>
+    <string name="enroll_fail">Enrollment failed. Try again</string>
 </resources>

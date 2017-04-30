@@ -63,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity {
             VolleySingleton.getInstance(view.getContext())
                     .addToRequestQueue(factory.POSTSignUp(view.getContext(), name, login, password, is_student, prefs_editor));
         }
-        
+
     }
 
     public void linkLogin(View view) {
