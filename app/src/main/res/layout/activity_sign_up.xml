@@ -4,30 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ep1.joaofran.com.ep1.SignUpActivity"
     android:orientation="vertical"
-    android:paddingTop="70dp"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp">
+    android:paddingLeft="@dimen/login_signup_layout_padding_lr"
+    android:paddingRight="@dimen/login_signup_layout_padding_lr"
+    android:paddingTop="@dimen/login_signup_layout_padding_top"
+    tools:context="ep1.joaofran.com.ep1.SignUpActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="72dp"
-        android:text="@string/signup"
         android:id="@+id/tvSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
-        android:textStyle="bold"
-        android:textSize="40dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
+        android:text="@string/signup"
+        android:textSize="@dimen/login_signup_title_textsize"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etInsertName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/etInsertPassword"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
+        android:layout_marginTop="@dimen/login_signup_margin_small"
         android:hint="@string/name_hint"
         android:inputType="textPersonName" />
 
@@ -36,8 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/etInsertPassword"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
+        android:layout_marginTop="@dimen/login_signup_margin_small"
         android:hint="@string/NUSP_hint"
         android:inputType="number"
         android:maxLength="7" />
@@ -47,40 +47,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnSignUp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
+        android:layout_marginTop="@dimen/login_signup_margin_small"
         android:cursorVisible="true"
         android:hint="@string/Pass_hint"
         android:inputType="textPassword" />
 
     <RadioGroup
+        android:id="@+id/rgSignupType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:checkedButton="@+id/rbStudent"
-        android:id="@+id/rgSignupType"
         android:layout_gravity="center"
-        >
+        android:checkedButton="@+id/rbStudent"
+        android:orientation="horizontal">
 
         <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/rbStudent"
-            android:text="@string/student"
-            android:buttonTint="@android:color/darker_gray"
-            android:textColor="@android:color/darker_gray"
-            android:layout_margin="10dp"
-        />
-
-        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/rbTeacer"
-            android:text="@string/teacher"
-            android:buttonTint="@android:color/darker_gray"
-            android:textColor="@android:color/darker_gray"
             android:layout_margin="10dp"
-            />
+            android:buttonTint="@android:color/darker_gray"
+            android:text="@string/student"
+            android:textColor="@android:color/darker_gray" />
+
+        <RadioButton
+            android:id="@+id/rbTeacer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:buttonTint="@android:color/darker_gray"
+            android:text="@string/teacher"
+            android:textColor="@android:color/darker_gray" />
     </RadioGroup>
 
 
@@ -88,22 +85,22 @@
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:padding="12dp"
+        android:layout_marginBottom="@dimen/login_signup_margin_large"
+        android:layout_marginTop="@dimen/login_signup_margin_large"
+        android:onClick="signUp"
+        android:padding="@dimen/login_signup_button_padding"
         android:text="@string/signup"
-        android:textColorLink="@android:color/darker_gray"
-        android:onClick="signUp" />
+        android:textColorLink="@android:color/darker_gray" />
 
     <TextView
+        android:id="@+id/tvLinkSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvLinkSignUp"
-        android:text="@string/linkLogin"
-        android:layout_marginBottom="24dp"
         android:layout_gravity="center"
-        android:textColor="@android:color/holo_blue_light"
+        android:layout_marginBottom="@dimen/login_signup_margin_large"
         android:clickable="true"
-        android:onClick="linkLogin"/>
+        android:onClick="linkLogin"
+        android:text="@string/linkLogin"
+        android:textColor="@android:color/holo_blue_light" />
 
 </LinearLayout>

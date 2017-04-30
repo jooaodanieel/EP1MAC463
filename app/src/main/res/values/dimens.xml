@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="login_signup_layout_padding_top">40dp</dimen>
+    <dimen name="login_signup_layout_padding_lr">24dp</dimen>
+    <dimen name="login_signup_margin_small">8dp</dimen>
+    <dimen name="login_signup_margin_large">24dp</dimen>
+    <dimen name="login_signup_button_padding">12dp</dimen>
+    <dimen name="login_signup_title_textsize">40sp</dimen>
+</resources>

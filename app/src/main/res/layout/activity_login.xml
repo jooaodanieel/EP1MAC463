@@ -7,18 +7,18 @@
     tools:context="ep1.joaofran.com.ep1.LoginActivity"
     android:orientation="vertical"
     android:paddingTop="70dp"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp">
+    android:paddingLeft="@dimen/login_signup_layout_padding_lr"
+    android:paddingRight="@dimen/login_signup_layout_padding_lr">
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="72dp"
+        android:layout_height="wrap_content"
         android:text="@string/login"
         android:id="@+id/tvLogin"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
         android:textStyle="bold"
-        android:textSize="40dp"
+        android:textSize="@dimen/login_signup_title_textsize"
         android:layout_gravity="center"/>
 
     <EditText
@@ -26,8 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/etPassword"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/login_signup_margin_small"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
         android:hint="@string/NUSP_hint"
         android:inputType="number"
         android:maxLength="7" />
@@ -37,8 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnLogin"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
+        android:layout_marginTop="@dimen/login_signup_margin_small"
         android:cursorVisible="true"
         android:hint="@string/Pass_hint"
         android:inputType="textPassword" />
@@ -70,9 +70,9 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:padding="12dp"
+        android:layout_marginTop="@dimen/login_signup_margin_large"
+        android:layout_marginBottom="@dimen/login_signup_margin_large"
+        android:padding="@dimen/login_signup_button_padding"
         android:text="@string/login"
         android:textColorLink="@android:color/darker_gray"
         android:onClick="login" />
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="@dimen/login_signup_margin_large"
         android:clickable="true"
         android:onClick="linkSignUp"
         android:text="@string/linkSignUp"
