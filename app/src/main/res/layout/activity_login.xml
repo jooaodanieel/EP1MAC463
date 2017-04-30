@@ -43,6 +43,28 @@
         android:hint="@string/Pass_hint"
         android:inputType="textPassword" />
 
+    <RadioGroup
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/rgLoginType">
+
+        <RadioButton
+            android:id="@+id/rbstudent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/student" />
+
+        <RadioButton
+            android:id="@+id/rbTeacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/teacher" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
@@ -53,18 +75,17 @@
         android:text="@string/login"
         android:textColorLink="@android:color/darker_gray"
         android:onClick="login" />
-    
+
     <TextView
+        android:id="@+id/tvLinkSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvLinkSignUp"
-        android:text="@string/linkSignUp"
-        android:layout_marginBottom="24dp"
         android:layout_gravity="center"
-        android:textColor="@android:color/holo_blue_light"
+        android:layout_marginBottom="24dp"
         android:clickable="true"
-        android:onClick="linkSignUp"/>
-
+        android:onClick="linkSignUp"
+        android:text="@string/linkSignUp"
+        android:textColor="@android:color/holo_blue_light" />
 
 
 </LinearLayout>

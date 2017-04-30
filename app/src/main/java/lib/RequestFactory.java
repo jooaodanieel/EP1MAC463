@@ -2,7 +2,9 @@ package lib;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -204,4 +207,43 @@ public class RequestFactory {
     //            }
     //        };
     //    }
+
+    public StringRequest POSTLogin (final Context context, final String login, String pass, final boolean is_student, final SharedPreferences.Editor prefs_editor) {
+        final String TAG = "LOGINREQ";
+        String url = this.base_url + "login/" + (is_student ? "student" : "teacher");
+
+        Log.d(TAG,"url: " + url);
+
+        final Map<String,String> params = new HashMap<>();
+        params.put("nusp",login);
+        params.put("pass",pass);
+
+        return new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+//                        Log.d(TAG,response);
+                        if (response.contains("true")) {
+                            Log.d(TAG,"login successful");
+                            prefs_editor.putString(User.ID,login);
+                            prefs_editor.putBoolean(User.TYPE,is_student);
+                            prefs_editor.commit();
+                            context.startActivity(new Intent(context,ProfileActivity.class));
+                        } else {
+                            Log.d(TAG,"login failed");
+                            Toast.makeText(context,context.getString(R.string.login_fail),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG,error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+        };
+    }
 }

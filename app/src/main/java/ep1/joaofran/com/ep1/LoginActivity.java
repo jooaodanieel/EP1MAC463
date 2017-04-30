@@ -8,9 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import lib.RequestFactory;
 import lib.User;
+import lib.VolleySingleton;
 import tasks.GetTask;
 import tasks.LoginTask;
 
@@ -19,8 +23,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText et_login;
     private EditText et_password;
+    private RadioGroup radioGroup;
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefs_editor;
+    private RequestFactory factory = new RequestFactory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,34 +39,29 @@ public class LoginActivity extends AppCompatActivity {
 
         et_login = (EditText) findViewById(R.id.etNUSP);
         et_password = (EditText) findViewById(R.id.etPassword);
+        radioGroup = (RadioGroup) findViewById(R.id.rgLoginType);
+
         prefs = getSharedPreferences(getString(R.string.shared_preferences_file),MODE_PRIVATE);
         prefs_editor = prefs.edit();
     }
 
     public void login (View view) {
-        String login = et_login.getText().toString();
-        String password = et_password.getText().toString();
+        if (!et_login.getText().toString().isEmpty() &&
+                !et_password.getText().toString().isEmpty() &&
+                radioGroup.getCheckedRadioButtonId() != -1) {
+            String login = et_login.getText().toString();
+            String password = et_password.getText().toString();
+            RadioButton checked = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+            Boolean u_type_student = checked.getText().toString() == getString(R.string.student);
 
-        Log.d(TAG, "Button clicked");
+            Log.d(TAG, "Button clicked");
 
-        // Login no webbserver
-
-        if (true) {
-            Log.d(TAG, "Log In successful");
-
-            Intent intent = new Intent (view.getContext(), ProfileActivity.class);
-//            intent.putExtra(User.ID, login);
-//            intent.putExtra(User.TYPE, false);
-            prefs_editor.putString(User.ID,login);
-            prefs_editor.putBoolean(User.TYPE,false);
-            prefs_editor.commit();
-            startActivity(intent);
+            VolleySingleton.getInstance(view.getContext())
+                    .addToRequestQueue(factory.POSTLogin(view.getContext(), login, password, u_type_student, prefs_editor));
+        } else {
+            Toast.makeText(view.getContext(),getString(R.string.incorrect_login_info),Toast.LENGTH_LONG).show();
         }
-        else {
-            Log.d(TAG, "Log In failed");
 
-            Toast.makeText(view.getContext(), R.string.login_fail, Toast.LENGTH_LONG).show();
-        }
     }
 
     public void linkSignUp (View view) {
