@@ -246,4 +246,44 @@ public class RequestFactory {
             }
         };
     }
+
+    public StringRequest POSTSignUp (final Context context, final String name, final String login, String pass, final boolean is_student, final SharedPreferences.Editor prefs_editor) {
+        final String TAG = "SIGNUPREQ";
+        String url = this.base_url + (is_student ? "student" : "teacher") +  "/add";
+
+        Log.d(TAG,"url: " + url);
+
+        final Map<String,String> params = new HashMap<>();
+        params.put("name", name);
+        params.put("nusp", login);
+        params.put("pass", pass);
+
+        return new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG,response);
+                        if (response.contains("true")) {
+                            Log.d(TAG,"signup successful");
+                            prefs_editor.putString(User.ID,login);
+                            prefs_editor.putBoolean(User.TYPE,is_student);
+                            prefs_editor.commit();
+                            context.startActivity(new Intent(context,ProfileActivity.class));
+                        } else {
+                            Log.d(TAG,"signup failed");
+                            Toast.makeText(context,context.getString(R.string.signup_fail),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG,error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+        };
+    }
 }

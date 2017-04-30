@@ -35,5 +35,6 @@
     <string name="students_retrieval">Retrieving student list...</string>
     <string name="empty_student_list">No students enrolled in this seminar yet.</string>
     <string name="shared_preferences_file">SHARED_PREFERENCES_FILE</string>
-    <string name="incorrect_login_info">Invalid login parameters</string>
+    <string name="incorrect_info">Invalid parameters</string>
+    <string name="signup_fail">Sign Up failed. Try again</string>
 </resources>

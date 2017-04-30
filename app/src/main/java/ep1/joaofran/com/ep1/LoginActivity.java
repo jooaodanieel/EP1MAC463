@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             VolleySingleton.getInstance(view.getContext())
                     .addToRequestQueue(factory.POSTLogin(view.getContext(), login, password, u_type_student, prefs_editor));
         } else {
-            Toast.makeText(view.getContext(),getString(R.string.incorrect_login_info),Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(),getString(R.string.incorrect_info),Toast.LENGTH_LONG).show();
         }
 
     }

@@ -10,6 +10,10 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import lib.RequestFactory;
+import lib.User;
+import lib.VolleySingleton;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "SignUpActivity";
@@ -17,10 +21,12 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText et_name;
     private EditText et_login;
     private EditText et_password;
-    private RadioGroup type;
+    private RadioGroup rg_type;
 
     private SharedPreferences prefs;
     private SharedPreferences.Editor prefs_editor;
+
+    private RequestFactory factory = new RequestFactory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         et_name = (EditText) findViewById(R.id.etInsertName);
         et_login = (EditText) findViewById(R.id.etInsertNUSP);
-        et_password = (EditText) findViewById(R.id.etPassword);
+        et_password = (EditText) findViewById(R.id.etInsertPassword);
+        rg_type = (RadioGroup) findViewById(R.id.rgSignupType);
 
         prefs = getSharedPreferences(getString(R.string.shared_preferences_file), MODE_PRIVATE);
         prefs_editor = prefs.edit();
@@ -42,26 +49,26 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void signUp(View view) {
 
+        Log.d(TAG, "button clicked");
         // Sign up no webserver
-        //getCheckedRadioButtonId()
+        String name = et_name.getText().toString();
+        String login = et_login.getText().toString();
+        String password = et_password.getText().toString();
+        Boolean is_student = (rg_type.getCheckedRadioButtonId() == R.id.rbStudent);
 
-        if () {
 
+        if (name.isEmpty() || login.isEmpty() || password.isEmpty()) {
+            Toast.makeText(view.getContext(), R.string.incorrect_info, Toast.LENGTH_LONG).show();
         } else {
-
+            VolleySingleton.getInstance(view.getContext())
+                    .addToRequestQueue(factory.POSTSignUp(view.getContext(), name, login, password, is_student, prefs_editor));
         }
-
-        Log.d (TAG, "Sign Up successfull");
-
-        Intent intent = new Intent(view.getContext(), ProfileActivity.class);
-        //Mandar informações do usuário
-        startActivity(intent);
+        
     }
 
     public void linkLogin(View view) {
         Log.d(TAG, "To Login activity");
 
-        Intent intent = new Intent(view.getContext(), LoginActivity.class);
-        startActivity(intent);
+       finish();
     }
 }
