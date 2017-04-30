@@ -3,6 +3,7 @@ package ep1.joaofran.com.ep1;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.support.v7.app.ActionBar;
@@ -52,6 +53,8 @@ public class SeminarActivity extends AppCompatActivity {
     private String seminar_name;
     private Boolean is_student;
     private Bitmap bitmap = null;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor prefs_editor;
 
     // Elementos da activity de um professor
     private EditText et_seminar_name;
@@ -71,6 +74,9 @@ public class SeminarActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
             case (R.id.itLogOut):
+                // clear shared preferences
+                prefs_editor.clear();
+                prefs_editor.commit();
                 Intent intent = new Intent(SeminarActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -93,6 +99,8 @@ public class SeminarActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        prefs = getSharedPreferences(getString(R.string.shared_preferences_file),MODE_PRIVATE);
+        prefs_editor = prefs.edit();
 
         Intent intent = getIntent();
         is_student = intent.getBooleanExtra(User.TYPE, true);

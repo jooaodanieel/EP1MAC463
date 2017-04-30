@@ -64,6 +64,9 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
             case (R.id.itLogOut):
+                // clear no shared preferences
+                prefs_editor.clear();
+                prefs_editor.commit();
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
