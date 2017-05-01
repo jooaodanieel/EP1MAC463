@@ -183,16 +183,12 @@ public class SeminarActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(this, R.layout.student_row, R.id.tvStudent, this.students);
         students_list.setAdapter(adapter);
 
-        Toast.makeText(SeminarActivity.this, R.string.students_retrieval, Toast.LENGTH_SHORT);
+        Toast.makeText(SeminarActivity.this, R.string.students_retrieval, Toast.LENGTH_SHORT).show();
         //POST
         final Map<String,String> params = new HashMap<>();
         params.put("seminar_id", seminar_id);
-        JsonObjectRequest POSTRequest = factory.POSTStudentList(SeminarActivity.this,params, students, adapter);
+        StringRequest POSTRequest = factory.POSTStudentsEnrolled(students, adapter,params);
         VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(POSTRequest);
-
-        if (students.isEmpty()) {
-            Toast.makeText(SeminarActivity.this, R.string.empty_student_list, Toast.LENGTH_SHORT);
-        }
     }
 
     public void showQR(View view) {
@@ -215,7 +211,6 @@ public class SeminarActivity extends AppCompatActivity {
 
         alert.show();
     }
-
 
     public Bitmap generateQR (String s) {
 

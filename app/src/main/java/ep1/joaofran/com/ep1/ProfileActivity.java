@@ -88,10 +88,6 @@ public class ProfileActivity extends AppCompatActivity {
         prefs = getSharedPreferences(getString(R.string.shared_preferences_file),MODE_PRIVATE);
         prefs_editor = prefs.edit();
 
-//        Intent intent = getIntent();
-//        String u_num = intent.getStringExtra(User.ID);
-//        Boolean u_student = intent.getBooleanExtra(User.TYPE, true);
-
         String u_num = prefs.getString(User.ID,"default");
         Boolean u_student = prefs.getBoolean(User.TYPE,true);
 
@@ -139,20 +135,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         });
 
-//        String url = "http://207.38.82.139:8001/seminar";
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        treatRequestResponse(response,adapter);
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d(TAG,"JSONRequest failed");
-//            }
-//        });
-
         JsonObjectRequest request = factory.GETSeminarList(seminars,adapter,TAG);
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
@@ -170,8 +152,6 @@ public class ProfileActivity extends AppCompatActivity {
         alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                // Entender como atribuir PRIORIDADES às requests
-                // POST precisa ser feito antes do GET
                 Map<String,String> params = new HashMap<>();
                 params.put("name",input.getText().toString());
                 StringRequest POSTRequest = factory.POSTNewSeminarRequest(view.getContext(),params);
