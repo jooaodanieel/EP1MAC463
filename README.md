@@ -16,3 +16,5 @@
 
 - [ ] testes automatizados
 - [ ] cache de informações criadas "offline"
+- [ ] Material Design
+- [ ] Boas Práticas
