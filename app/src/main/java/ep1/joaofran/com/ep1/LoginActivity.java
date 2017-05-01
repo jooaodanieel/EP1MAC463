@@ -37,12 +37,16 @@ public class LoginActivity extends AppCompatActivity {
 
         Log.d (TAG, "In Login activity");
 
-        et_login = (EditText) findViewById(R.id.etNUSP);
-        et_password = (EditText) findViewById(R.id.etPassword);
-        radioGroup = (RadioGroup) findViewById(R.id.rgLoginType);
-
         prefs = getSharedPreferences(getString(R.string.shared_preferences_file),MODE_PRIVATE);
         prefs_editor = prefs.edit();
+
+        if (prefs.contains(User.ID)) {
+            startActivity(new Intent(LoginActivity.this,ProfileActivity.class));
+        } else {
+            et_login = (EditText) findViewById(R.id.etNUSP);
+            et_password = (EditText) findViewById(R.id.etPassword);
+            radioGroup = (RadioGroup) findViewById(R.id.rgLoginType);
+        }
     }
 
     public void login (View view) {
