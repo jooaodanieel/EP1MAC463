@@ -1,6 +1,7 @@
 package ep1.joaofran.com.ep1;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -145,35 +146,42 @@ public class SeminarActivity extends AppCompatActivity {
     }
 
     public void deleteSeminar (View view) {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle(R.string.deleteSeminar);
+        if (this.students.get(0) == view.getContext().getString(R.string.no_students_enrolled)) {
 
-        final TextView text = new TextView(this);
-        text.setText(R.string.deleteSeminarExplanation);
-        alert.setView(text);
+            final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
+            alert.setTitle(R.string.deleteSeminar);
 
-                Map<String,String> params = new HashMap<>();
-                params.put("id",seminar_id);
-                StringRequest request = factory.POSTDeleteSeminar(params);
-                VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(request);
+            final TextView text = new TextView(this);
+            text.setText(R.string.deleteSeminarExplanation);
+            alert.setView(text);
 
-                startActivity(new Intent(SeminarActivity.this, ProfileActivity.class));
+            alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
 
-                finish();
-            }
-        });
+                    Map<String, String> params = new HashMap<>();
+                    params.put("id", seminar_id);
+                    StringRequest request = factory.POSTDeleteSeminar(params);
+                    VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(request);
 
-        alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Cancelado
-            }
-        });
+                    startActivity(new Intent(SeminarActivity.this, ProfileActivity.class));
 
-        alert.show();
+                    finish();
+                }
+            });
+
+            alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // Cancelado
+                }
+            });
+
+            alert.show();
+        } else {
+            Context context = view.getContext();
+            Toast.makeText(context,context.getString(R.string.seminar_delete_fail),Toast.LENGTH_LONG).show();
+        }
     }
 
     private void listSetup () {
@@ -187,7 +195,7 @@ public class SeminarActivity extends AppCompatActivity {
         //POST
         final Map<String,String> params = new HashMap<>();
         params.put("seminar_id", seminar_id);
-        StringRequest POSTRequest = factory.POSTStudentsEnrolled(students, adapter,params);
+        StringRequest POSTRequest = factory.POSTStudentsEnrolled(this, students, adapter,params);
         VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(POSTRequest);
     }
 

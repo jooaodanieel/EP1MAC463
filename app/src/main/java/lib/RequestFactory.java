@@ -95,7 +95,7 @@ public class RequestFactory {
         };
     }
 
-    public StringRequest POSTStudentsEnrolled (final List<String> students, final ArrayAdapter adapter, final Map<String,String> params) {
+    public StringRequest POSTStudentsEnrolled (final Context context, final List<String> students, final ArrayAdapter adapter, final Map<String,String> params) {
         final String TAG = "EnrolledStudentsRequest";
         String url = this.base_url + "attendence/listStudents";
 
@@ -113,7 +113,7 @@ public class RequestFactory {
                             adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             Log.d(TAG,e.getMessage());
-                            students.add("No students enrolled yet");
+                            students.add(context.getString(R.string.no_students_enrolled));
                             adapter.notifyDataSetChanged();
                         }
                     }
