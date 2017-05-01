@@ -13,3 +13,6 @@
     - [ ] alterar seu cadastro
     - [x] consultar a lista de seminários
         - [ ] comprovar sua presença no seminário
+
+- [ ] testes automatizados
+- [ ] cache de informações criadas "offline"
