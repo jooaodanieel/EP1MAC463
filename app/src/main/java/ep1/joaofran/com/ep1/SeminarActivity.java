@@ -242,7 +242,7 @@ public class SeminarActivity extends AppCompatActivity {
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
             startActivityForResult(intent, 0);
         } catch (ActivityNotFoundException anfe) {
-            Toast toast = Toast.makeText(this, "No Scanner found", Toast.LENGTH_LONG);
+            Toast.makeText(this, R.string.no_scanner, Toast.LENGTH_LONG);
         }
     }
 

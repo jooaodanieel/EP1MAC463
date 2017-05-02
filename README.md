@@ -14,6 +14,7 @@
     - [x] consultar a lista de seminários
         - [ ] comprovar sua presença no seminário
 
+- [x] Salvar login (Shared Preferences)
 - [ ] testes automatizados
 - [ ] cache de informações criadas "offline"
 - [ ] Material Design

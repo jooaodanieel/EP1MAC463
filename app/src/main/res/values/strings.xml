@@ -42,4 +42,8 @@
     <string name="enroll_fail">Enrollment failed. Try again</string>
     <string name="no_students_enrolled">No students enrolled yet</string>
     <string name="seminar_delete_fail">Impossible to delete this seminar: there are students enrolled.</string>
+    <string name="no_scanner">No Scanner foundd</string>
+    <string name="editprofile">Edit Profile</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="new_pass_hint">New Password</string>
 </resources>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ep1.joaofran.com.ep1.EditProfileActivity"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/login_signup_layout_padding_lr"
+    android:paddingRight="@dimen/login_signup_layout_padding_lr"
+    android:paddingTop="@dimen/login_signup_layout_padding_top"
+    android:focusableInTouchMode="true">>
+
+
+    <TextView
+        android:id="@+id/tvEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
+        android:text="@string/editprofile"
+        android:textSize="@dimen/login_signup_title_textsize"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etEditName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etEditPassword"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
+        android:layout_marginTop="@dimen/login_signup_margin_small"
+        android:hint="@string/name_hint"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/tvEditNUSP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etEditPassword"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
+        android:layout_marginTop="@dimen/login_signup_margin_small"
+        android:inputType="number"
+        android:maxLength="7" />
+
+    <EditText
+        android:id="@+id/etEditPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSignUp"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
+        android:layout_marginTop="@dimen/login_signup_margin_small"
+        android:cursorVisible="true"
+        android:hint="@string/new_pass_hint"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btnSaveChanges"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/login_signup_margin_large"
+        android:layout_marginTop="@dimen/login_signup_margin_large"
+        android:onClick="signUp"
+        android:padding="@dimen/login_signup_button_padding"
+        android:text="@string/save_changes"
+        android:textColorLink="@android:color/darker_gray" />
+
+</LinearLayout>

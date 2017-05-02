@@ -15,8 +15,6 @@ import android.widget.Toast;
 import lib.RequestFactory;
 import lib.User;
 import lib.VolleySingleton;
-import tasks.GetTask;
-import tasks.LoginTask;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
