@@ -68,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
                 prefs_editor.clear();
                 prefs_editor.commit();
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
             case (R.id.refresh):

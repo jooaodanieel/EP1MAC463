@@ -39,7 +39,10 @@ public class LoginActivity extends AppCompatActivity {
         prefs_editor = prefs.edit();
 
         if (prefs.contains(User.ID)) {
-            startActivity(new Intent(LoginActivity.this,ProfileActivity.class));
+            Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);// New activity
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         } else {
             et_login = (EditText) findViewById(R.id.etNUSP);
             et_password = (EditText) findViewById(R.id.etPassword);

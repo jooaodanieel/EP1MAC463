@@ -1,5 +1,6 @@
 package lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -194,7 +195,10 @@ public class RequestFactory {
                             prefs_editor.putString(User.ID,login);
                             prefs_editor.putBoolean(User.TYPE,is_student);
                             prefs_editor.commit();
-                            context.startActivity(new Intent(context,ProfileActivity.class));
+                            Intent intent = new Intent(context, ProfileActivity.class);// New activity
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            context.startActivity(intent);
+                            ((Activity) context).finish();
                         } else {
                             Log.d(TAG,"login failed");
                             Toast.makeText(context,context.getString(R.string.login_fail),Toast.LENGTH_SHORT).show();
