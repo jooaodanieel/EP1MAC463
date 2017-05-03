@@ -2,10 +2,13 @@ package ep1.joaofran.com.ep1;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +30,13 @@ public class EditProfileActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu (Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu){
+        menu.findItem(R.id.refresh).setVisible(false);
+        menu.findItem(R.id.edit).setVisible(false);
+        return true;
     }
 
     @Override
@@ -37,11 +47,11 @@ public class EditProfileActivity extends AppCompatActivity {
                 prefs_editor.clear();
                 prefs_editor.commit();
                 Intent intent = new Intent(EditProfileActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 return true;
-            case (R.id.home):
-                finish();
+            case (android.R.id.home):
+                this.finish();
                 return true;
         }
 
@@ -54,6 +64,10 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         setTitle(R.string.editprofile);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        Log.d(TAG, "In Edit Profile");
 
         prefs = getSharedPreferences(getString(R.string.shared_preferences_file),MODE_PRIVATE);
         prefs_editor = prefs.edit();
@@ -62,6 +76,10 @@ public class EditProfileActivity extends AppCompatActivity {
         et_name = (EditText) findViewById(R.id.etEditName);
         et_pass = (EditText) findViewById(R.id.etEditPassword);
 
+        tv_nusp.setText(prefs.getString(User.ID, "default"));
+    }
 
+    public void edit(View view) {
+        //POST
     }
 }

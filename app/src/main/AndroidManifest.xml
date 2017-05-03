@@ -20,7 +20,9 @@
         </activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".SeminarActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".SeminarActivity">
+        </activity>
     </application>
 
 </manifest>

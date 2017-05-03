@@ -71,6 +71,11 @@ public class SeminarActivity extends AppCompatActivity {
         return true;
     }
 
+    public boolean onPrepareOptionsMenu(Menu menu){
+        menu.findItem(R.id.refresh).setVisible(false);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
@@ -79,11 +84,14 @@ public class SeminarActivity extends AppCompatActivity {
                 prefs_editor.clear();
                 prefs_editor.commit();
                 Intent intent = new Intent(SeminarActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 return true;
             case android.R.id.home:
                 this.finish();
+                return true;
+            case (R.id.edit):
+                startActivity(new Intent(SeminarActivity.this, EditProfileActivity.class));
                 return true;
         }
 

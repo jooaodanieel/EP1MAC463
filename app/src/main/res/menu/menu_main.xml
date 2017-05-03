@@ -6,7 +6,7 @@
         android:id="@+id/itLogOut"
         android:title="@string/logout"
         app:showAsAction="never"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         >
     </item>
 
@@ -15,5 +15,11 @@
         android:title="@string/refresh"
         app:showAsAction="never"
         android:orderInCategory="1"></item>
+
+    <item
+        android:id="@+id/edit"
+        android:title="@string/editprofile"
+        app:showAsAction="never"
+        android:orderInCategory="2"></item>
 
 </menu>

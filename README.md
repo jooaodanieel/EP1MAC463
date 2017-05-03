@@ -18,5 +18,5 @@
 - [ ] testes automatizados
 - [ ] cache de informações criadas "offline"
 - [ ] Material Design
-- [ ] Boas Práticas
-- [ ] Back na profile deve dar logout? App quebrando quando da back no login
+- [ ] Boas Práticas (Organização do código e padronização)
+- [x] Back na profile deve dar logout? App quebrando quando da back no login

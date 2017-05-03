@@ -23,6 +23,17 @@
         android:textSize="@dimen/login_signup_title_textsize"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/tvEditNUSP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etEditPassword"
+        android:layout_marginBottom="@dimen/login_signup_margin_small"
+        android:layout_marginTop="@dimen/login_signup_margin_small"
+        android:inputType="number"
+        android:maxLength="7"
+        android:textStyle="bold"></TextView>
+
     <EditText
         android:id="@+id/etEditName"
         android:layout_width="match_parent"
@@ -33,15 +44,7 @@
         android:hint="@string/name_hint"
         android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/tvEditNUSP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/etEditPassword"
-        android:layout_marginBottom="@dimen/login_signup_margin_small"
-        android:layout_marginTop="@dimen/login_signup_margin_small"
-        android:inputType="number"
-        android:maxLength="7" />
+
 
     <EditText
         android:id="@+id/etEditPassword"
