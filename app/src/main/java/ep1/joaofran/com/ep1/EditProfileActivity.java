@@ -11,9 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import lib.RequestFactory;
 import lib.User;
+import lib.VolleySingleton;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -80,6 +82,17 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void edit(View view) {
-        //POST
+        String name = et_name.getText().toString();
+        String pass = et_pass.getText().toString();
+
+        if (!name.isEmpty() && !pass.isEmpty()) {
+            String nusp = prefs.getString(User.ID,"0000000");
+            VolleySingleton.getInstance(view.getContext()).addToRequestQueue(
+                    factory.POSTEditStudent(view.getContext(),nusp,name,pass));
+        } else {
+            Toast.makeText(view.getContext(), getString(R.string.incorrect_info),Toast.LENGTH_SHORT).show();
+            et_name.setText("");
+            et_pass.setText("");
+        }
     }
 }

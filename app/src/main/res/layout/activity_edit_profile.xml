@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/login_signup_margin_large"
         android:layout_marginTop="@dimen/login_signup_margin_large"
-        android:onClick="signUp"
+        android:onClick="edit"
         android:padding="@dimen/login_signup_button_padding"
         android:text="@string/save_changes"
         android:textColorLink="@android:color/darker_gray" />

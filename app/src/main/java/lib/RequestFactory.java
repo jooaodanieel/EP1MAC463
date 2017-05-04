@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ep1.joaofran.com.ep1.EditProfileActivity;
 import ep1.joaofran.com.ep1.ProfileActivity;
 import ep1.joaofran.com.ep1.R;
 import ep1.joaofran.com.ep1.SeminarActivity;
@@ -285,6 +286,39 @@ public class RequestFactory {
                     Log.d(TAG,error.getMessage());
                 }
         }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+        };
+    }
+
+    public StringRequest POSTEditStudent (final Context context, String nusp, String name, String pass) {
+        String url = this.base_url + "student/edit";
+        final String TAG = "POSTEditStudent";
+
+        final Map<String,String> params = new HashMap<>();
+        params.put("nusp",nusp);
+        params.put("name",name);
+        params.put("pass",pass);
+
+        return new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG,"sucess");
+                        Toast.makeText(context,context.getString(R.string.edit_success),Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, ProfileActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG,"Failed");
+                Toast.makeText(context,context.getString(R.string.edit_failed),Toast.LENGTH_SHORT).show();
+            }
+        }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;

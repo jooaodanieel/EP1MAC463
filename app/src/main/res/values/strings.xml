@@ -46,4 +46,6 @@
     <string name="editprofile">Edit Profile</string>
     <string name="save_changes">Save Changes</string>
     <string name="new_pass_hint">New Password</string>
+    <string name="edit_success">Profile successfully edited</string>
+    <string name="edit_failed">Failed editing profile</string>
 </resources>
