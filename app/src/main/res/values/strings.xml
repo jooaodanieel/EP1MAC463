@@ -24,7 +24,7 @@
     <string name="signup_title">Welcome</string>
     <string name="login_title">Welcome back</string>
     <string name="profile_title">All Seminars</string>
-    <string name="seminar_title">Seminar Info</string>
+    <string name="seminar_title">Seminar Details</string>
     <string name="student">Student</string>
     <string name="teacher">Teacher</string>
     <string name="qrcode">QR Code</string>
