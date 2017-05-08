@@ -208,6 +208,8 @@ public class SeminarActivity extends AppCompatActivity {
     }
 
     public void showQR(View view) {
+        final Button bnt = (Button) findViewById(R.id.bntGenQR);
+        bnt.setEnabled(false);
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -222,10 +224,19 @@ public class SeminarActivity extends AppCompatActivity {
         alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // Cancelado
+                bnt.setEnabled(true);
+            }
+        });
+        alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                bnt.setEnabled(true);
             }
         });
 
         alert.show();
+
     }
 
     public Bitmap generateQR (String s) {

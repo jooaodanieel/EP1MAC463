@@ -58,7 +58,6 @@ public class RequestFactory {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(debugTag,"GETSeminarRequest failed");
-                progressDialog.dismiss();
             }
         });
     }
