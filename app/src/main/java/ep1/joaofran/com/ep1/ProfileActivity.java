@@ -1,5 +1,6 @@
 package ep1.joaofran.com.ep1;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -73,7 +74,14 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case (R.id.refresh):
-                recreate();
+                final ProgressDialog progressDialog = new ProgressDialog(ProfileActivity.this);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Retrieving seminar list...");
+                progressDialog.show();
+
+
+                JsonObjectRequest request = factory.GETSeminarList(seminars,adapter,TAG, progressDialog);
+                VolleySingleton.getInstance(this).addToRequestQueue(request);
                 return true;
             case (R.id.edit):
                 startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
@@ -115,7 +123,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void listSetup(String num, Boolean student) {
         Log.d(TAG, "Setting up seminar list");
 
-        Toast.makeText(this,R.string.seminars_retrieval, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this,R.string.seminars_retrieval, Toast.LENGTH_LONG).show();
 
         final String u_num = num;
         final Boolean u_student = student;
@@ -139,7 +147,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         });
 
-        JsonObjectRequest request = factory.GETSeminarList(seminars,adapter,TAG);
+        final ProgressDialog progressDialog = new ProgressDialog(ProfileActivity.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Retrieving seminar list...");
+        progressDialog.show();
+
+
+        JsonObjectRequest request = factory.GETSeminarList(seminars,adapter,TAG, progressDialog);
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 

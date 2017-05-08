@@ -1,6 +1,7 @@
 package lib;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import ep1.joaofran.com.ep1.EditProfileActivity;
+import ep1.joaofran.com.ep1.LoginActivity;
 import ep1.joaofran.com.ep1.ProfileActivity;
 import ep1.joaofran.com.ep1.R;
 import ep1.joaofran.com.ep1.SeminarActivity;
@@ -43,18 +45,20 @@ public class RequestFactory {
     private String debugTag;
 
 
-    public JsonObjectRequest GETSeminarList (final List<Seminar> seminars, final ArrayAdapter adapter, final String debugTag) {
+    public JsonObjectRequest GETSeminarList (final List<Seminar> seminars, final ArrayAdapter adapter, final String debugTag, final ProgressDialog progressDialog) {
         String url = this.base_url + "seminar";
         return new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         treatGETSeminarRequestResponse(response, seminars, adapter);
+                        progressDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(debugTag,"GETSeminarRequest failed");
+                progressDialog.dismiss();
             }
         });
     }

@@ -258,7 +258,7 @@ public class SeminarActivity extends AppCompatActivity {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String content = intent.getStringExtra("SCAN_RESULT");
-                if (Integer.parseInt(content) != Integer.parseInt(seminar_id)) {
+                if (content != seminar_id) {
                     Toast.makeText(this, R.string.wrong_seminar, Toast.LENGTH_SHORT).show();
                 }
                 else {
