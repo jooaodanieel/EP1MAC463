@@ -20,3 +20,5 @@
 - [ ] Material Design
 - [ ] Boas Práticas (Organização do código e padronização)
 - [x] Back na profile deve dar logout? App quebrando quando da back no login
+- [ ] Progress Dialog Log in/ SignUp
+- [ ] Side menu
