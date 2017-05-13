@@ -288,8 +288,8 @@ public class SeminarActivity extends AppCompatActivity {
                 else {
                     Log.d(TAG, "Right seminar");
 
-                    VolleySingleton.getInstance(this).addToRequestQueue(
-                            factory.POSTEnroll (this, prefs.getString(User.ID, "default"), seminar_id)
+                    VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(
+                            factory.POSTEnroll (SeminarActivity.this, prefs.getString(User.ID, "default"), seminar_id)
                     );
                 }
 
@@ -300,9 +300,9 @@ public class SeminarActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String content = intent.getStringExtra("SCAN_RESULT");
 
-                
-                VolleySingleton.getInstance(this).addToRequestQueue(
-                        factory.POSTEnroll (this, content.substring(1), seminar_id)
+
+                VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(
+                        factory.ConfirmStudent (SeminarActivity.this, content.substring(1), seminar_id)
                 );
             }
         }

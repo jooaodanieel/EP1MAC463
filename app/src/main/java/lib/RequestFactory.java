@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -35,6 +36,7 @@ import ep1.joaofran.com.ep1.SignUpActivity;
 
 import static com.android.volley.VolleyLog.TAG;
 import static ep1.joaofran.com.ep1.R.string.login;
+import static ep1.joaofran.com.ep1.R.string.signup;
 
 /**
  * Created by joaofran on 27/04/17.
@@ -68,7 +70,7 @@ public class RequestFactory {
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG,"GETSeminarRequest failed");
                 progressDialog.dismiss();
-                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
+                alertMsg(context, R.string.request_failure);
             }
         });
     }
@@ -139,7 +141,7 @@ public class RequestFactory {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG,"failed");
-                        Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
+                        alertMsg(context, R.string.request_failure);
                     }
                 }
         ){
@@ -186,7 +188,7 @@ public class RequestFactory {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "edit failure");
-                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
+                alertMsg(context, R.string.request_failure);
             }
         }) {
             @Override
@@ -235,14 +237,14 @@ public class RequestFactory {
                             Log.d(TAG,"login failed");
                             progressDialog.dismiss();
 
-                            Toast.makeText(context,context.getString(R.string.login_fail),Toast.LENGTH_SHORT).show();
+                            alertMsg(context, R.string.login_fail);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG,error.getMessage());
-                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
+                alertMsg(context, R.string.request_failure);
             }
         }){
             @Override
@@ -286,14 +288,14 @@ public class RequestFactory {
                         } else {
                             Log.d(TAG,"signup failed");
                             progressDialog.dismiss();
-                            Toast.makeText(context,context.getString(R.string.signup_fail),Toast.LENGTH_SHORT).show();
+                            alertMsg(context, R.string.signup_fail);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG,error.getMessage());
-                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
+                alertMsg(context, R.string.request_failure);
             }
         }){
             @Override
@@ -318,18 +320,18 @@ public class RequestFactory {
                     public void onResponse(String response) {
                         if (response.contains("true")) {
                             Log.d(TAG, "enroll success");
-                            Toast.makeText(context, R.string.enroll_success, Toast.LENGTH_LONG).show();
+                            alertMsg(context, R.string.enroll_success);
                         }
                         else {
                             Log.d(TAG, "enroll fail");
-                            Toast.makeText(context, R.string.enroll_fail, Toast.LENGTH_LONG).show();
+                            alertMsg(context, R.string.enroll_fail);
                         }
                     }
                 }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d(TAG,error.getMessage());
-                    Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
+                    alertMsg(context, R.string.request_failure);
                 }
         }) {
             @Override
@@ -353,7 +355,7 @@ public class RequestFactory {
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG,"sucess");
-                        Toast.makeText(context,context.getString(R.string.edit_success),Toast.LENGTH_SHORT).show();
+                        alertMsg(context, R.string.edit_success);
                         Intent intent = new Intent(context, ProfileActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
@@ -362,7 +364,7 @@ public class RequestFactory {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG,"Failed");
-                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
+                alertMsg(context, R.string.request_failure);
             }
         }){
             @Override
@@ -370,5 +372,54 @@ public class RequestFactory {
                 return params;
             }
         };
+    }
+
+    public StringRequest ConfirmStudent (final Context context, final String nusp, final String seminar_id) {
+        final String TAG = "ConfirmStudent";
+        String url = this.base_url + "student/get/" + nusp;
+        String message = context.getString(R.string.authentication);
+
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(message);
+        progressDialog.show();
+
+        return new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        if (response.contains("true")) {
+                            Log.d(TAG, "Student");
+
+                            VolleySingleton.getInstance(context).addToRequestQueue(
+                                    new RequestFactory().POSTEnroll (context, nusp, seminar_id)
+                            );
+                        }
+                        else {
+                            Log.d(TAG, "Not student");
+                            alertMsg(context, R.string.no_account);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG,"GET Student failed");
+                progressDialog.dismiss();
+                alertMsg(context, R.string.request_failure);
+            }
+        });
+    }
+
+    private void alertMsg (Context context, int string_id) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.setTitle(context.getString(string_id));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 }
