@@ -1,6 +1,7 @@
 package ep1.joaofran.com.ep1;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lib.QRCodeManager;
 import lib.RequestFactory;
 import lib.Seminar;
 import lib.User;
@@ -126,19 +128,21 @@ public class ProfileActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, R.layout.seminar_row, R.id.tvSeminar, this.seminars);
         seminars_list.setAdapter(adapter);
 
-        seminars_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        if (!student) {
+            seminars_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent item_click = new Intent(ProfileActivity.this, SeminarActivity.class);
-                item_click.putExtra(User.ID, u_num);
-                item_click.putExtra(User.TYPE, u_student);
-                item_click.putExtra(Seminar.ID, seminars.get(position).getId().toString());
-                item_click.putExtra(Seminar.NAME, seminars.get(position).getName());
-                startActivity(item_click);
-            }
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent item_click = new Intent(ProfileActivity.this, SeminarActivity.class);
+                    item_click.putExtra(User.ID, u_num);
+                    item_click.putExtra(User.TYPE, u_student);
+                    item_click.putExtra(Seminar.ID, seminars.get(position).getId().toString());
+                    item_click.putExtra(Seminar.NAME, seminars.get(position).getName());
+                    startActivity(item_click);
+                }
 
-        });
+            });
+        }
 
         JsonObjectRequest request = factory.GETSeminarList(seminars, adapter, ProfileActivity.this);
         VolleySingleton.getInstance(this).addToRequestQueue(request);
@@ -173,5 +177,26 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         alert.show();
+    }
+
+    public void scanQR(View v) {
+        try {
+            Intent intent = new Intent(QRCodeManager.ACTION_SCAN);
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            startActivityForResult(intent, 0);
+        } catch (ActivityNotFoundException anfe) {
+            Toast.makeText(this, R.string.no_scanner, Toast.LENGTH_LONG);
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String content = intent.getStringExtra("SCAN_RESULT");
+                VolleySingleton.getInstance(ProfileActivity.this).addToRequestQueue(
+                        factory.ConfirmSeminar(ProfileActivity.this, prefs.getString(User.ID, "default"), content)
+                );
+            }
+        }
     }
 }

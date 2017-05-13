@@ -311,6 +311,8 @@ public class RequestFactory {
 
         final Map<String, String> params = new HashMap<>();
 
+        Log.d(TAG, "NUSP: " + user_id);
+        Log.d(TAG, "Seminar: " + seminar_id);
         params.put("nusp", user_id);
         params.put ("seminar_id", seminar_id);
 
@@ -403,6 +405,39 @@ public class RequestFactory {
                 Log.d(TAG,"GET Student failed");
                 progressDialog.dismiss();
                 alertMsg(context, R.string.no_account);
+            }
+        });
+    }
+
+    public StringRequest ConfirmSeminar (final Context context, final String nusp, final String seminar_id) {
+        final String TAG = "ConfirmSeminar";
+        String url = this.base_url + "seminar/get/" + seminar_id;
+        String message = context.getString(R.string.authentication);
+
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(message);
+        progressDialog.show();
+
+        return new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        if (response.contains("true")) {
+                            Log.d(TAG, "Seminar");
+
+                            VolleySingleton.getInstance(context).addToRequestQueue(
+                                    new RequestFactory().POSTEnroll (context, nusp, seminar_id)
+                            );
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG,"No seminar");
+                progressDialog.dismiss();
+                alertMsg(context, R.string.no_seminar);
             }
         });
     }

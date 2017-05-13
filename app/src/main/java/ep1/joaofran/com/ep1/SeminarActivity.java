@@ -47,9 +47,6 @@ import lib.VolleySingleton;
 public class SeminarActivity extends AppCompatActivity {
 
     private static final String TAG = "SeminarActivity";
-    private static final Integer QR_CODE = 0;
-    private static final Integer BAR_CODE = 1;
-
 
 
     private TextView tv_seminar_name;
@@ -258,45 +255,19 @@ public class SeminarActivity extends AppCompatActivity {
         }
     }
 
-    public void scanQR(View v) {
-        try {
-            Intent intent = new Intent(QRCodeManager.ACTION_SCAN);
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-            startActivityForResult(intent, QR_CODE);
-        } catch (ActivityNotFoundException anfe) {
-            Toast.makeText(this, R.string.no_scanner, Toast.LENGTH_LONG);
-        }
-    }
 
     public void scanBarcode(View v) {
         try {
             Intent intent = new Intent(QRCodeManager.ACTION_SCAN);
             intent.putExtra("SCAN_MODE", "PRODUCT_CODE");
-            startActivityForResult(intent, BAR_CODE);
+            startActivityForResult(intent, 0);
         } catch (ActivityNotFoundException anfe) {
             Toast.makeText(this, R.string.no_scanner, Toast.LENGTH_LONG);
         }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == QR_CODE) {
-            if (resultCode == RESULT_OK) {
-                String content = intent.getStringExtra("SCAN_RESULT");
-                if (content != seminar_id) {
-                    Toast.makeText(this, R.string.wrong_seminar, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Log.d(TAG, "Right seminar");
-
-                    VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(
-                            factory.POSTEnroll (SeminarActivity.this, prefs.getString(User.ID, "default"), seminar_id)
-                    );
-                }
-
-
-            }
-        }
-        if (requestCode == BAR_CODE) {
+        if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String content = intent.getStringExtra("SCAN_RESULT");
 
