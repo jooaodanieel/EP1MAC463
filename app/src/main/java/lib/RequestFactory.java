@@ -396,17 +396,13 @@ public class RequestFactory {
                                     new RequestFactory().POSTEnroll (context, nusp, seminar_id)
                             );
                         }
-                        else {
-                            Log.d(TAG, "Not student");
-                            alertMsg(context, R.string.no_account);
-                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG,"GET Student failed");
                 progressDialog.dismiss();
-                alertMsg(context, R.string.request_failure);
+                alertMsg(context, R.string.no_account);
             }
         });
     }
