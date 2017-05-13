@@ -47,6 +47,9 @@ import lib.VolleySingleton;
 public class SeminarActivity extends AppCompatActivity {
 
     private static final String TAG = "SeminarActivity";
+    private static final Integer QR_CODE = 0;
+    private static final Integer BAR_CODE = 1;
+
 
 
     private TextView tv_seminar_name;
@@ -259,14 +262,24 @@ public class SeminarActivity extends AppCompatActivity {
         try {
             Intent intent = new Intent(QRCodeManager.ACTION_SCAN);
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-            startActivityForResult(intent, 0);
+            startActivityForResult(intent, QR_CODE);
+        } catch (ActivityNotFoundException anfe) {
+            Toast.makeText(this, R.string.no_scanner, Toast.LENGTH_LONG);
+        }
+    }
+
+    public void scanBarcode(View v) {
+        try {
+            Intent intent = new Intent(QRCodeManager.ACTION_SCAN);
+            intent.putExtra("SCAN_MODE", "PRODUCT_CODE");
+            startActivityForResult(intent, BAR_CODE);
         } catch (ActivityNotFoundException anfe) {
             Toast.makeText(this, R.string.no_scanner, Toast.LENGTH_LONG);
         }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == 0) {
+        if (requestCode == QR_CODE) {
             if (resultCode == RESULT_OK) {
                 String content = intent.getStringExtra("SCAN_RESULT");
                 if (content != seminar_id) {
@@ -281,6 +294,16 @@ public class SeminarActivity extends AppCompatActivity {
                 }
 
 
+            }
+        }
+        if (requestCode == BAR_CODE) {
+            if (resultCode == RESULT_OK) {
+                String content = intent.getStringExtra("SCAN_RESULT");
+
+                
+                VolleySingleton.getInstance(this).addToRequestQueue(
+                        factory.POSTEnroll (this, content.substring(1), seminar_id)
+                );
             }
         }
     }
