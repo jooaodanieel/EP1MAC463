@@ -48,4 +48,7 @@
     <string name="new_pass_hint">New Password</string>
     <string name="edit_success">Profile successfully edited</string>
     <string name="edit_failed">Failed editing profile</string>
+    <string name="request_failure">No connection to server</string>
+    <string name="authentication">Authenticating...</string>
+    <string name="creating_accont">Creating account...</string>
 </resources>

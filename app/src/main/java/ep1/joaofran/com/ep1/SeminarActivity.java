@@ -147,7 +147,7 @@ public class SeminarActivity extends AppCompatActivity {
             Map<String,String> params = new HashMap<>();
             params.put("id",seminar_id);
             params.put("name", et_seminar_name.getText().toString());
-            StringRequest request = factory.POSTEditSeminar(params);
+            StringRequest request = factory.POSTEditSeminar(params, SeminarActivity.this);
             VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(request);
 
         }
@@ -170,7 +170,7 @@ public class SeminarActivity extends AppCompatActivity {
 
                     Map<String, String> params = new HashMap<>();
                     params.put("id", seminar_id);
-                    StringRequest request = factory.POSTDeleteSeminar(params);
+                    StringRequest request = factory.POSTDeleteSeminar(params, SeminarActivity.this);
                     VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(request);
 
                     startActivity(new Intent(SeminarActivity.this, ProfileActivity.class));
@@ -285,5 +285,5 @@ public class SeminarActivity extends AppCompatActivity {
         }
     }
 
-    // On destroy ou no stop verificar se precisa editar o Seminário
+
 }

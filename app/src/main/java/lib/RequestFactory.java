@@ -1,6 +1,7 @@
 package lib;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -42,11 +43,19 @@ import static ep1.joaofran.com.ep1.R.string.login;
 public class RequestFactory {
 
     private final String base_url = "http://207.38.82.139:8001/";
-    private String debugTag;
 
 
-    public JsonObjectRequest GETSeminarList (final List<Seminar> seminars, final ArrayAdapter adapter, final String debugTag, final ProgressDialog progressDialog) {
+    public JsonObjectRequest GETSeminarList (final List<Seminar> seminars, final ArrayAdapter adapter,
+                                             final Context context) {
+        final String TAG = "GETSeminarList";
         String url = this.base_url + "seminar";
+        String message = context.getString(R.string.seminars_retrieval);
+
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage(message);
+                progressDialog.show();
+
         return new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -57,7 +66,9 @@ public class RequestFactory {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(debugTag,"GETSeminarRequest failed");
+                Log.d(TAG,"GETSeminarRequest failed");
+                progressDialog.dismiss();
+                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -79,6 +90,7 @@ public class RequestFactory {
     }
 
     public StringRequest POSTNewSeminarRequest (final Context context, final Map<String,String> params) {
+        final String TAG = "POSTNewSeminarRequest";
         String url = this.base_url + "seminar/add";
         return new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -89,8 +101,8 @@ public class RequestFactory {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(debugTag, "POSTNewSeminarRequest failed");
-                Toast.makeText(context, R.string.seminar_created_faliure, Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "POSTNewSeminarRequest failed");
+                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -101,7 +113,7 @@ public class RequestFactory {
     }
 
     public StringRequest POSTStudentsEnrolled (final Context context, final List<String> students, final ArrayAdapter adapter, final Map<String,String> params) {
-        final String TAG = "EnrolledStudentsRequest";
+        final String TAG = "POSTStudentsEnrolled";
         String url = this.base_url + "attendence/listStudents";
 
         return new StringRequest(Request.Method.POST, url,
@@ -127,6 +139,7 @@ public class RequestFactory {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG,"failed");
+                        Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
                     }
                 }
         ){
@@ -137,7 +150,8 @@ public class RequestFactory {
         };
     }
 
-    public StringRequest POSTDeleteSeminar (final Map<String,String> params) {
+    public StringRequest POSTDeleteSeminar (final Map<String,String> params, final Context context) {
+        final String TAG = "POSTDeleteSeminar";
         String url = this.base_url + "seminar/delete";
         return new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -148,7 +162,8 @@ public class RequestFactory {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("POSTDeleteSeminar", "delete failed");
+                Log.d(TAG, "delete failed");
+                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -158,7 +173,8 @@ public class RequestFactory {
         };
     }
 
-    public StringRequest POSTEditSeminar(final Map<String, String> params) {
+    public StringRequest POSTEditSeminar(final Map<String, String> params, final Context context) {
+        final String TAG = "POSTEditSeminar";
         String url = base_url + "seminar/edit";
         return new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -169,7 +185,8 @@ public class RequestFactory {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("POSTEditSeminar", "edit failure");
+                Log.d(TAG, "edit failure");
+                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -179,8 +196,9 @@ public class RequestFactory {
         };
     }
 
-    public StringRequest POSTLogin (final Context context, final String login, String pass, final boolean is_student, final SharedPreferences.Editor prefs_editor) {
-        final String TAG = "LOGINREQ";
+    public StringRequest POSTLogin (final Context context, final String login, String pass,
+                                    final boolean is_student, final SharedPreferences.Editor prefs_editor) {
+        final String TAG = "POSTLogin";
         String url = this.base_url + "login/" + (is_student ? "student" : "teacher");
 
         Log.d(TAG,"url: " + url);
@@ -188,6 +206,13 @@ public class RequestFactory {
         final Map<String,String> params = new HashMap<>();
         params.put("nusp",login);
         params.put("pass",pass);
+
+        String message = context.getString(R.string.authentication);
+
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(message);
+        progressDialog.show();
 
         return new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -202,9 +227,14 @@ public class RequestFactory {
                             Intent intent = new Intent(context, ProfileActivity.class);// New activity
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(intent);
+
+                            progressDialog.dismiss();
+
                             ((Activity) context).finish();
                         } else {
                             Log.d(TAG,"login failed");
+                            progressDialog.dismiss();
+
                             Toast.makeText(context,context.getString(R.string.login_fail),Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -212,6 +242,7 @@ public class RequestFactory {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG,error.getMessage());
+                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -221,8 +252,9 @@ public class RequestFactory {
         };
     }
 
-    public StringRequest POSTSignUp (final Context context, final String name, final String login, String pass, final boolean is_student, final SharedPreferences.Editor prefs_editor) {
-        final String TAG = "SIGNUPREQ";
+    public StringRequest POSTSignUp (final Context context, final String name, final String login,
+                                     String pass, final boolean is_student, final SharedPreferences.Editor prefs_editor) {
+        final String TAG = "POSTSignUp";
         String url = this.base_url + (is_student ? "student" : "teacher") +  "/add";
 
         Log.d(TAG,"url: " + url);
@@ -231,6 +263,13 @@ public class RequestFactory {
         params.put("name", name);
         params.put("nusp", login);
         params.put("pass", pass);
+
+        String message = context.getString(R.string.creating_accont);
+
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(message);
+        progressDialog.show();
 
         return new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -242,9 +281,11 @@ public class RequestFactory {
                             prefs_editor.putString(User.ID,login);
                             prefs_editor.putBoolean(User.TYPE,is_student);
                             prefs_editor.commit();
+                            progressDialog.dismiss();
                             context.startActivity(new Intent(context,ProfileActivity.class));
                         } else {
                             Log.d(TAG,"signup failed");
+                            progressDialog.dismiss();
                             Toast.makeText(context,context.getString(R.string.signup_fail),Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -252,6 +293,7 @@ public class RequestFactory {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG,error.getMessage());
+                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -287,6 +329,7 @@ public class RequestFactory {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d(TAG,error.getMessage());
+                    Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
                 }
         }) {
             @Override
@@ -319,7 +362,7 @@ public class RequestFactory {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG,"Failed");
-                Toast.makeText(context,context.getString(R.string.edit_failed),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

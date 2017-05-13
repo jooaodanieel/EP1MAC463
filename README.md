@@ -1,18 +1,17 @@
 - Área do Professor
     - [x] login
-    - [ ] alterar seu cadastro
+    - [x] alterar seu cadastro
     - [x] cadastro de novos professores
     - [x] cadastro de seminários
         - [x] visualizar os detalhes do seminário
         - [x] listar os alunos que assistiram cada seminário
-        - [ ] validar os comprovantes de presença
+    - [ ] Confirmar aluno (scaneando carterinha USP
 
 - Área do Aluno
     - [x] login
     - [x] se cadastrar no sistema
-    - [ ] alterar seu cadastro
+    - [x] alterar seu cadastro
     - [x] consultar a lista de seminários
-        - [ ] comprovar sua presença no seminário
 
 - [x] Salvar login (Shared Preferences)
 - [ ] testes automatizados
@@ -20,5 +19,5 @@
 - [ ] Material Design
 - [ ] Boas Práticas (Organização do código e padronização)
 - [x] Back na profile deve dar logout? App quebrando quando da back no login
-- [ ] Progress Dialog Log in/ SignUp
+- [x] Progress Dialog Log in/ SignUp
 - [ ] Side menu

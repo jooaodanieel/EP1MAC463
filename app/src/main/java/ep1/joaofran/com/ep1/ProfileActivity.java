@@ -69,18 +69,11 @@ public class ProfileActivity extends AppCompatActivity {
                 prefs_editor.clear();
                 prefs_editor.commit();
                 Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 return true;
             case (R.id.refresh):
-                final ProgressDialog progressDialog = new ProgressDialog(ProfileActivity.this);
-                progressDialog.setIndeterminate(true);
-                progressDialog.setMessage("Retrieving seminar list...");
-                progressDialog.show();
-
-
-                JsonObjectRequest request = factory.GETSeminarList(seminars,adapter,TAG, progressDialog);
+                JsonObjectRequest request = factory.GETSeminarList(seminars, adapter, ProfileActivity.this);
                 VolleySingleton.getInstance(this).addToRequestQueue(request);
                 return true;
             case (R.id.edit):
@@ -147,13 +140,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         });
 
-        final ProgressDialog progressDialog = new ProgressDialog(ProfileActivity.this);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Retrieving seminar list...");
-        progressDialog.show();
-
-
-        JsonObjectRequest request = factory.GETSeminarList(seminars,adapter,TAG, progressDialog);
+        JsonObjectRequest request = factory.GETSeminarList(seminars, adapter, ProfileActivity.this);
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
