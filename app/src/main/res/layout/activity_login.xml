@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
-        android:id="@+id/tvLogin"
+        android:id="@+id/LtvLogin"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/login_signup_margin_small"
         android:textStyle="bold"
@@ -22,7 +22,7 @@
         android:layout_gravity="center"/>
 
     <EditText
-        android:id="@+id/etNUSP"
+        android:id="@+id/LetNUSP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/etPassword"
@@ -33,7 +33,7 @@
         android:maxLength="7" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/LetPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnLogin"
@@ -48,18 +48,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:checkedButton="@+id/rbstudent"
-        android:id="@+id/rgLoginType">
+        android:checkedButton="@+id/LrbStudent"
+        android:id="@+id/LrgLoginType">
 
         <RadioButton
-            android:id="@+id/rbstudent"
+            android:id="@+id/LrbStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/student" />
 
         <RadioButton
-            android:id="@+id/rbTeacher"
+            android:id="@+id/LrbTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -67,7 +67,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/LbtnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/login_signup_margin_large"
@@ -78,7 +78,7 @@
         android:onClick="login" />
 
     <TextView
-        android:id="@+id/tvLinkSignUp"
+        android:id="@+id/LtvLinkSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -44,9 +44,9 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            et_login = (EditText) findViewById(R.id.etNUSP);
-            et_password = (EditText) findViewById(R.id.etPassword);
-            radioGroup = (RadioGroup) findViewById(R.id.rgLoginType);
+            et_login = (EditText) findViewById(R.id.LetNUSP);
+            et_password = (EditText) findViewById(R.id.LetPassword);
+            radioGroup = (RadioGroup) findViewById(R.id.LrgLoginType);
         }
     }
 
