@@ -37,10 +37,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         Log.d (TAG, "In SignUp activity");
 
-        et_name = (EditText) findViewById(R.id.etInsertName);
-        et_login = (EditText) findViewById(R.id.etInsertNUSP);
-        et_password = (EditText) findViewById(R.id.etInsertPassword);
-        rg_type = (RadioGroup) findViewById(R.id.rgSignupType);
+        et_name = (EditText) findViewById(R.id.SetInsertName);
+        et_login = (EditText) findViewById(R.id.SetInsertNUSP);
+        et_password = (EditText) findViewById(R.id.SetInsertPassword);
+        rg_type = (RadioGroup) findViewById(R.id.SrgSignupType);
 
         prefs = getSharedPreferences(getString(R.string.shared_preferences_file), MODE_PRIVATE);
         prefs_editor = prefs.edit();
@@ -54,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
         String name = et_name.getText().toString();
         String login = et_login.getText().toString();
         String password = et_password.getText().toString();
-        Boolean is_student = (rg_type.getCheckedRadioButtonId() == R.id.rbStudent);
+        Boolean is_student = (rg_type.getCheckedRadioButtonId() == R.id.SrbStudent);
 
 
         if (name.isEmpty() || login.isEmpty() || password.isEmpty()) {

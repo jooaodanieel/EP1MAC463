@@ -11,7 +11,7 @@
     tools:context="ep1.joaofran.com.ep1.SignUpActivity">
 
     <TextView
-        android:id="@+id/tvSignUp"
+        android:id="@+id/StvSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -22,20 +22,20 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/etInsertName"
+        android:id="@+id/SetInsertName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/etInsertPassword"
+        android:layout_above="@+id/SetInsertPassword"
         android:layout_marginBottom="@dimen/login_signup_margin_small"
         android:layout_marginTop="@dimen/login_signup_margin_small"
         android:hint="@string/name_hint"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/etInsertNUSP"
+        android:id="@+id/SetInsertNUSP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/etInsertPassword"
+        android:layout_above="@+id/SetInsertPassword"
         android:layout_marginBottom="@dimen/login_signup_margin_small"
         android:layout_marginTop="@dimen/login_signup_margin_small"
         android:hint="@string/NUSP_hint"
@@ -43,10 +43,10 @@
         android:maxLength="7" />
 
     <EditText
-        android:id="@+id/etInsertPassword"
+        android:id="@+id/SetInsertPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnSignUp"
+        android:layout_above="@+id/SbtnSignUp"
         android:layout_marginBottom="@dimen/login_signup_margin_small"
         android:layout_marginTop="@dimen/login_signup_margin_small"
         android:cursorVisible="true"
@@ -54,15 +54,15 @@
         android:inputType="textPassword" />
 
     <RadioGroup
-        android:id="@+id/rgSignupType"
+        android:id="@+id/SrgSignupType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:checkedButton="@+id/rbStudent"
+        android:checkedButton="@+id/SrbStudent"
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/rbStudent"
+            android:id="@+id/SrbStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -71,7 +71,7 @@
             android:textColor="@android:color/darker_gray" />
 
         <RadioButton
-            android:id="@+id/rbTeacer"
+            android:id="@+id/SrbTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -82,7 +82,7 @@
 
 
     <Button
-        android:id="@+id/btnSignUp"
+        android:id="@+id/SbtnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/login_signup_margin_large"
@@ -93,7 +93,7 @@
         android:textColorLink="@android:color/darker_gray" />
 
     <TextView
-        android:id="@+id/tvLinkSignUp"
+        android:id="@+id/StvLinkSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
