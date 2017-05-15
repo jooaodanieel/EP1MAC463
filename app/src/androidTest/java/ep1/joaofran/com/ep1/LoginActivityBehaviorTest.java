@@ -1,8 +1,11 @@
 package ep1.joaofran.com.ep1;
 
+import android.support.test.espresso.ViewInteraction;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -12,7 +15,10 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
@@ -42,6 +48,10 @@ public class LoginActivityBehaviorTest {
     public ActivityTestRule<LoginActivity> loginActivityActivityTestRule =
             new ActivityTestRule<>(LoginActivity.class);
 
+    @Rule
+    public IntentsTestRule<ProfileActivity> profileActivityIntentsTestRule =
+            new IntentsTestRule<>(ProfileActivity.class);
+
 
     @Before
     public void initStrings() {
@@ -52,12 +62,32 @@ public class LoginActivityBehaviorTest {
         invalids[1] = new LoginBox("7895656","654321",false);
     }
 
-    @Test
-    public void fillLogin_sameActivity () {
+
+    private void fillLogin(LoginBox login) {
         onView(withId(R.id.LetNUSP))
-                .perform(typeText(valids[0].NUSP));
+                .perform(typeText(login.NUSP));
         onView(withId(R.id.LetPassword))
-                .perform(typeText(valids[0].PASS));
-        onView(withId(valids[0].is_student ? R.id.LrbStudent : R.id.LrbTeacher)).perform(click());
+                .perform(typeText(login.PASS));
+        onView(withId(login.is_student ? R.id.LrbStudent : R.id.LrbTeacher)).perform(click());
+
+        onView(withId(R.id.LbtnLogin)).perform(click());
+    }
+
+    @Test
+    public void loginSuccess () {
+        int i = (int) Math.random() * 2;
+        LoginBox login = valids[i];
+
+        fillLogin(login);
+
+        intended(hasComponent(ProfileActivity.class.getName()));
+    }
+
+    @Test
+    public void loginFail () {
+        int i = (int) Math.random() * 2;
+        LoginBox login = invalids[i];
+
+        fillLogin(login);
     }
 }

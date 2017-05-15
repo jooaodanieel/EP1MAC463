@@ -31,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Log.d("LOGIN_ID",String.valueOf(R.layout.activity_login));
+
         setTitle(R.string.login_title);
 
         Log.d (TAG, "In Login activity");
