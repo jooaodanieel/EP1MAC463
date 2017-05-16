@@ -96,7 +96,7 @@ public class RequestFactory {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(context, params.get((String)"name").toString() + R.string.seminar_created_succsess, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, params.get((String)"name").toString() +" "+ context.getString(R.string.seminar_created_succsess), Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
