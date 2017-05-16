@@ -273,7 +273,7 @@ public class SeminarActivity extends AppCompatActivity {
 
 
                 VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(
-                        factory.ConfirmStudent (SeminarActivity.this, content.substring(1), seminar_id)
+                        factory.ConfirmStudent (SeminarActivity.this, content.substring(1), seminar_id, students, adapter)
                 );
             }
         }

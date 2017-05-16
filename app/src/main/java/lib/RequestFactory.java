@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -305,7 +306,8 @@ public class RequestFactory {
         };
     }
 
-    public StringRequest POSTEnroll (final Context context, final String user_id, final String seminar_id) {
+    public StringRequest POSTEnroll (final Context context, final String user_id, final String seminar_id,
+                                     final List<String> students, final ArrayAdapter adapter) {
         final String TAG = "POSTEnroll";
         String url = base_url + "attendence/submit";
 
@@ -323,6 +325,10 @@ public class RequestFactory {
                         if (response.contains("true")) {
                             Log.d(TAG, "enroll success");
                             alertMsg(context, R.string.enroll_success);
+                            if (students != null) {
+                                students.add(user_id);
+                                adapter.notifyDataSetChanged();
+                            }
                         }
                         else {
                             Log.d(TAG, "enroll fail");
@@ -376,7 +382,8 @@ public class RequestFactory {
         };
     }
 
-    public StringRequest ConfirmStudent (final Context context, final String nusp, final String seminar_id) {
+    public StringRequest ConfirmStudent (final Context context, final String nusp, final String seminar_id,
+                                         final List<String> students, final ArrayAdapter adapter) {
         final String TAG = "ConfirmStudent";
         String url = this.base_url + "student/get/" + nusp;
         String message = context.getString(R.string.authentication);
@@ -395,8 +402,11 @@ public class RequestFactory {
                             Log.d(TAG, "Student");
 
                             VolleySingleton.getInstance(context).addToRequestQueue(
-                                    new RequestFactory().POSTEnroll (context, nusp, seminar_id)
+                                    new RequestFactory().POSTEnroll (context, nusp, seminar_id, students, adapter)
                             );
+                        }
+                        else {
+                            alertMsg(context, R.string.no_account);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -428,8 +438,10 @@ public class RequestFactory {
                             Log.d(TAG, "Seminar");
 
                             VolleySingleton.getInstance(context).addToRequestQueue(
-                                    new RequestFactory().POSTEnroll (context, nusp, seminar_id)
+                                    new RequestFactory().POSTEnroll (context, nusp, seminar_id, null, null)
                             );
+                        } else {
+                            alertMsg(context, R.string.no_seminar);
                         }
                     }
                 }, new Response.ErrorListener() {
