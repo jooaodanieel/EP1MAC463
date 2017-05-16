@@ -60,7 +60,7 @@ public class SeminarActivity extends AppCompatActivity {
     // Elementos da activity de um professor
     private EditText et_seminar_name;
     private ListView students_list;
-    private ArrayList<String> students;
+    private ArrayList<User> students;
     private ArrayAdapter adapter;
     private final RequestFactory factory = new RequestFactory();
 
@@ -151,7 +151,7 @@ public class SeminarActivity extends AppCompatActivity {
 
     public void deleteSeminar (View view) {
 
-        if (this.students.get(0) == view.getContext().getString(R.string.no_students_enrolled)) {
+        if (this.students.get(0).getId() == view.getContext().getString(R.string.no_students_enrolled)) {
 
             final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 

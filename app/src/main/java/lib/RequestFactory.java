@@ -115,7 +115,7 @@ public class RequestFactory {
         };
     }
 
-    public StringRequest POSTStudentsEnrolled (final Context context, final List<String> students, final ArrayAdapter adapter, final Map<String,String> params) {
+    public StringRequest POSTStudentsEnrolled (final Context context, final List<User> students, final ArrayAdapter adapter, final Map<String,String> params) {
         final String TAG = "POSTStudentsEnrolled";
         String url = this.base_url + "attendence/listStudents";
 
@@ -128,12 +128,16 @@ public class RequestFactory {
                             JSONArray data = (JSONArray) jsonObject.get("data");
                             for (int i = 0; i < data.length(); i++) {
                                 jsonObject = (JSONObject) data.get(i);
-                                students.add((String) jsonObject.get("student_nusp"));
+                                User user = new User((String) jsonObject.get("student_nusp"), true);
+                                VolleySingleton.getInstance(context).addToRequestQueue(
+                                        new RequestFactory().GETUserName (context, user, students, adapter)
+                                );
                             }
-                            adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             Log.d(TAG,e.getMessage());
-                            students.add(context.getString(R.string.no_students_enrolled));
+                            User user = new User ("", true);
+                            user.setName(context.getString(R.string.no_students_enrolled));
+                            students.add(user);
                             adapter.notifyDataSetChanged();
                         }
                     }
@@ -307,7 +311,7 @@ public class RequestFactory {
     }
 
     public StringRequest POSTEnroll (final Context context, final String user_id, final String seminar_id,
-                                     final List<String> students, final ArrayAdapter adapter) {
+                                     final List<User> students, final ArrayAdapter adapter) {
         final String TAG = "POSTEnroll";
         String url = base_url + "attendence/submit";
 
@@ -326,8 +330,10 @@ public class RequestFactory {
                             Log.d(TAG, "enroll success");
                             alertMsg(context, R.string.enroll_success);
                             if (students != null) {
-                                students.add(user_id);
-                                adapter.notifyDataSetChanged();
+                                User user = new User(user_id, true);
+                                VolleySingleton.getInstance(context).addToRequestQueue(
+                                        new RequestFactory().GETUserName (context, user, students, adapter)
+                                );
                             }
                         }
                         else {
@@ -383,7 +389,7 @@ public class RequestFactory {
     }
 
     public StringRequest ConfirmStudent (final Context context, final String nusp, final String seminar_id,
-                                         final List<String> students, final ArrayAdapter adapter) {
+                                         final List<User> students, final ArrayAdapter adapter) {
         final String TAG = "ConfirmStudent";
         String url = this.base_url + "student/get/" + nusp;
         String message = context.getString(R.string.authentication);
@@ -450,6 +456,33 @@ public class RequestFactory {
                 Log.d(TAG,"No seminar");
                 progressDialog.dismiss();
                 alertMsg(context, R.string.no_seminar);
+            }
+        });
+    }
+    public  JsonObjectRequest GETUserName (final Context context, final User user, final List<User> students, final ArrayAdapter adapter) {
+        final String TAG = "GETUserName";
+        Log.d(TAG, "In GetUserName");
+        String url = this.base_url + (user.isStudent() ? "student" : "teacher") + "/get/" + user.getId();
+
+        return new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d(TAG, "Success");
+                            user.setName(response.getJSONObject("data").getString("name"));
+                            students.add(user);
+                            Log.d(TAG, user.toString());
+                            adapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG,"failed");
+                alertMsg(context, R.string.request_failure);
             }
         });
     }
