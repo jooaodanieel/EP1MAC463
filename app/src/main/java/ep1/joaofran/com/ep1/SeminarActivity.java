@@ -117,11 +117,7 @@ public class SeminarActivity extends AppCompatActivity {
         seminar_name = intent.getStringExtra(Seminar.NAME);
 
         if (is_student) {
-            Log.d(TAG, "In Seminar activity: Student");
-
-            setContentView(R.layout.activity_seminar_student);
-            tv_seminar_name = (TextView) findViewById(R.id.tvSeminarName);
-            tv_seminar_name.setText(seminar_name);
+            Log.d(TAG, "Error");
         }
         else {
             Log.d(TAG, "In Seminar activity: Teacher");
