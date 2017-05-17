@@ -10,6 +10,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,6 +22,7 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
@@ -76,13 +78,17 @@ public class BehaviorTest {
     public IntentsTestRule<ProfileActivity> profileActivityIntentsTestRule =
             new IntentsTestRule<>(ProfileActivity.class);
 
-    @Before
-    public void init() {
+    private void clearSession () {
         Activity activity = loginActivityActivityTestRule.getActivity();
         String sp_name = activity.getString(R.string.shared_preferences_file);
         SharedPreferences.Editor sp_editor = activity.getSharedPreferences(sp_name,Context.MODE_PRIVATE).edit();
         sp_editor.clear();
         sp_editor.commit();
+    }
+
+    @Before
+    public void init() {
+        clearSession();
 
         validsLogin[0] = new LoginBox("7895656","123456",true);
         validsLogin[1] = new LoginBox("7895656","123456",false);
@@ -99,6 +105,11 @@ public class BehaviorTest {
 
         invalidsSignup[0] = new SignupBox("HARDCODED NAME THREE","7578279","123456",true);
         invalidsSignup[1] = new SignupBox("HARDCODED NAME FOUR","7578279","123456",false);
+    }
+
+    @After
+    public void finish() {
+        clearSession();
     }
 
     private void fillLogin(LoginBox login) {
@@ -131,6 +142,15 @@ public class BehaviorTest {
 
         onView(withId(R.id.SbtnSignUp))
                 .perform(click());
+    }
+
+    private void openAndFillNewSeminar (String SEMINAR_NAME) {
+        onView(withId(R.id.fabAddSeminar))
+                .perform(click());
+
+        onView(withHint(R.string.new_seminar_hint))
+                .perform(typeText(SEMINAR_NAME));
+        onView(withText(R.string.OK)).perform(click());
     }
 
     @Test
@@ -186,5 +206,35 @@ public class BehaviorTest {
         fillSignup(validsSignup[i]);
 
         intended(hasComponent(ProfileActivity.class.getName()));
+    }
+
+    @Test
+    public void newSeminarSuccess () {
+
+        fillLogin(new LoginBox("3141561","654321",false));
+
+        String SEMINAR_NAME = "Created while running a test";
+
+        openAndFillNewSeminar(SEMINAR_NAME);
+
+    }
+
+    @Test
+    public void newSeminarFail () {
+        fillLogin(new LoginBox("3141561","654321",false));
+
+        String SEMINAR_NAME = "";
+
+        openAndFillNewSeminar(SEMINAR_NAME);
+    }
+
+    @Test
+    public void editProfile () {
+        int i = (int) Math.random() * 31415;
+        LoginBox login = new LoginBox("3141561","654321", i % 2 == 0);
+
+        fillLogin(login);
+
+        // como abrir menu?
     }
 }
