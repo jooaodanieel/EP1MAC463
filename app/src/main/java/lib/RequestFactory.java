@@ -413,8 +413,8 @@ public class RequestFactory {
      * Ao receber uma resposta positiva, inicia uma nova Activity, onde
      * terá a lista de seminários novamente.
      */
-    public StringRequest çnt(final Context context, String nusp, String name, String pass) {
-        String url = this.base_url + "student/edit";
+    public StringRequest POSTEditUser(final Context context, String nusp, Boolean is_student, String name, String pass) {
+        String url = this.base_url + (is_student ? "student" : "teacher") + "/edit";
         final String TAG = "˜nt";
 
         final Map<String, String> params = new HashMap<>();
@@ -427,10 +427,18 @@ public class RequestFactory {
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "sucess");
-                        alertMsg(context, R.string.edit_success);
-                        Intent intent = new Intent(context, ProfileActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        context.startActivity(intent);
+                        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                        alertDialog.setTitle(context.getString(R.string.edit_success));
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        Intent intent = new Intent(context, ProfileActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        context.startActivity(intent);
+                                    }
+                                });
+                        alertDialog.show();
                     }
                 }, new Response.ErrorListener() {
             @Override

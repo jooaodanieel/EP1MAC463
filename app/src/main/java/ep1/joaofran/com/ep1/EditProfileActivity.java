@@ -89,8 +89,9 @@ public class EditProfileActivity extends AppCompatActivity {
         if (!name.isEmpty() && !pass.isEmpty()) {
             // submete alterações para WebService
             String nusp = prefs.getString(User.ID,"0000000");
+            Boolean is_student = prefs.getBoolean(User.TYPE, true);
             VolleySingleton.getInstance(view.getContext()).addToRequestQueue(
-                    factory.POSTEditStudent(view.getContext(),nusp,name,pass));
+                    factory.POSTEditUser(view.getContext(), nusp, is_student, name,pass));
         } else {
             // não submete nada ao WebService e limpa os campos
             Toast.makeText(view.getContext(), getString(R.string.incorrect_info),Toast.LENGTH_SHORT).show();
