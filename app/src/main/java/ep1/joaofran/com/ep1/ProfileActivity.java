@@ -152,15 +152,21 @@ public class ProfileActivity extends AppCompatActivity {
         alert.setTitle(R.string.newSeminar);
 
         final EditText input = new EditText(this);
+        input.setHint(R.string.new_seminar_hint);
         alert.setView(input);
 
         alert.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
-                Map<String,String> params = new HashMap<>();
-                params.put("name",input.getText().toString());
-                StringRequest POSTRequest = factory.POSTNewSeminarRequest(view.getContext(),params);
-                VolleySingleton.getInstance(view.getContext()).addToRequestQueue(POSTRequest);
+                if (input.getText().toString() != "") {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("name", input.getText().toString());
+                    StringRequest POSTRequest = factory.POSTNewSeminarRequest(view.getContext(), params);
+                    VolleySingleton.getInstance(view.getContext()).addToRequestQueue(POSTRequest);
+
+                } else {
+                    Toast.makeText(getApplicationContext(),R.string.new_seminar_fail,Toast.LENGTH_SHORT).show();
+                }
                 recreate();
 
             }
