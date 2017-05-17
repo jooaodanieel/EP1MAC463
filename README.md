@@ -5,7 +5,7 @@ Versão do aplicativo implementado em Android (Java)
 
 ### Grupo:
 * Victor Wichmann Raposo - 9298020
-* Joao
+* Joao Francisco Lino Daniel - 7578279
 
 ### Ambiente
 
