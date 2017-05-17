@@ -51,4 +51,6 @@
     <string name="request_failure">No connection to server</string>
     <string name="authentication">Authenticating...</string>
     <string name="creating_accont">Creating account...</string>
+    <string name="new_seminar_hint">Enter the name of the new seminar</string>
+    <string name="new_seminar_fail">Invalid input</string>
 </resources>
