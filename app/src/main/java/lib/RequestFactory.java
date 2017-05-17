@@ -45,9 +45,17 @@ import static ep1.joaofran.com.ep1.R.string.signup;
 
 public class RequestFactory {
 
+    // para facilitar, em cada request é apenas acrescentado a URI correspondente
     private final String base_url = "http://207.38.82.139:8001/";
 
-
+    /**
+     * Cria uma request do tipo GET para a lista de seminários já cadastrados.
+     * Assim que o método é chamado, ele cria uma ProgressDialog para que o
+     * usuário tenha ciência de que algo está em processo.
+     * A request, ao obter uma resposta positiva do servidor, submete a informação
+     * recebida ao método 'treatGETSeminarRequestResponse'; caso contrário, numa
+     * resposta negativa, cancela a Dialog e informa o usuário do erro ocorrido.
+     */
     public JsonObjectRequest GETSeminarList (final List<Seminar> seminars, final ArrayAdapter adapter,
                                              final Context context) {
         final String TAG = "GETSeminarList";
@@ -76,6 +84,11 @@ public class RequestFactory {
         });
     }
 
+    /**
+     * Destrincha o json obtido em vários jsons, os insere num ArrayList
+     * e notifica o Adapter (da ListView) que houve alterações, para que
+     * a ListView seja atualizada com o novo conteúdo.
+     */
     private void treatGETSeminarRequestResponse (JSONObject response, List<Seminar> seminars, ArrayAdapter adapter) {
         try {
             if (response != null) {
@@ -87,11 +100,15 @@ public class RequestFactory {
                 adapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {
-//            e.printStackTrace();
             Log.e(TAG, String.valueOf(e.getStackTrace()));
         }
     }
 
+    /**
+     * Cria uma request do tipo POST para criar um novo seminário no WebService.
+     * Ao receber uma resposta, notifica o usuário da situação (sucesso ou fracasso)
+     * através de um Toast
+     */
     public StringRequest POSTNewSeminarRequest (final Context context, final Map<String,String> params) {
         final String TAG = "POSTNewSeminarRequest";
         String url = this.base_url + "seminar/add";
@@ -115,6 +132,15 @@ public class RequestFactory {
         };
     }
 
+    /**
+     * Cria uma request do tipo POST para solicitar os alunos inscritos num
+     * determinado seminário.
+     * Ao receber uma resposta positiva, faz uma nova solicitação ao WebService
+     * pelo nome do usuário para cada NUSP obtido, para que a exibição da
+     * informação seja completa; caso a resposta não contenha nenhum aluno,
+     * informa ao usuário com um texto no lugar da lista de alunos; caso a resposta
+     * seja negativa, informa o usuário do ocorrido
+     */
     public StringRequest POSTStudentsEnrolled (final Context context, final List<User> students, final ArrayAdapter adapter, final Map<String,String> params) {
         final String TAG = "POSTStudentsEnrolled";
         String url = this.base_url + "attendence/listStudents";
@@ -157,6 +183,10 @@ public class RequestFactory {
         };
     }
 
+    /**
+     * Cria uma request do tipo POST para remover um seminário.
+     * Em caso de erro, notifica o usuário através de um toast
+     */
     public StringRequest POSTDeleteSeminar (final Map<String,String> params, final Context context) {
         final String TAG = "POSTDeleteSeminar";
         String url = this.base_url + "seminar/delete";
@@ -180,6 +210,10 @@ public class RequestFactory {
         };
     }
 
+    /**
+     * Cria uma request do tipo POST para edição de um seminário.
+     * Notifica o usuário em caso de erro
+     */
     public StringRequest POSTEditSeminar(final Map<String, String> params, final Context context) {
         final String TAG = "POSTEditSeminar";
         String url = base_url + "seminar/edit";
@@ -203,6 +237,14 @@ public class RequestFactory {
         };
     }
 
+    /**
+     * Cria uma request do tipo POST para realizar o login no sistema.
+     * Enquanto não recebe uma resposta, cria uma ProgressDialog para informar
+     * o usuário que está sendo processado algo. Ao receber uma resposta positiva,
+     * faz a persistência do login pelo uso de uma SharedPreferences e já aciona
+     * a nova activity - ProfileActivity -, onde há a lista de seminários; caso
+     * haja uma resposta negativa, notifica o usuário do ocorrido
+     */
     public StringRequest POSTLogin (final Context context, final String login, String pass,
                                     final boolean is_student, final SharedPreferences.Editor prefs_editor) {
         final String TAG = "POSTLogin";
@@ -225,13 +267,33 @@ public class RequestFactory {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        Log.d(TAG,response);
                         if (response.contains("true")) {
+                            Log.d(TAG,"login failed");
+                            progressDialog.dismiss();
+
+                            alertMsg(context, R.string.login_fail);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG,error.getMessage());
+                alertMsg(context, R.string.request_failure);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+        };
+    }
+
+
                             Log.d(TAG,"login successful");
                             prefs_editor.putString(User.ID,login);
                             prefs_editor.putBoolean(User.TYPE,is_student);
                             prefs_editor.commit();
-                            Intent intent = new Intent(context, ProfileActivity.class);// New activity
+                            Intent intent = new Intent(context, ProfileActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(intent);
 
@@ -259,6 +321,12 @@ public class RequestFactory {
         };
     }
 
+    /**
+     * Cria uma request do tipo POST para criar uma nova conta.
+     * Exibe uma ProgressDialog enquanto espera uma resposta do
+     * WebService. Caso a resposta seja positiva, faz login com
+     * persistência (SharedPreferences)
+     */
     public StringRequest POSTSignUp (final Context context, final String name, final String login,
                                      String pass, final boolean is_student, final SharedPreferences.Editor prefs_editor) {
         final String TAG = "POSTSignUp";
@@ -310,6 +378,11 @@ public class RequestFactory {
         };
     }
 
+    /**
+     * Cria uma request do tipo POST para matricular um aluno num seminário.
+     * Ao receber uma resposta positiva, faz uma nova request pelo nome do
+     * aluno para inserir na lista de matriculados.
+     */
     public StringRequest POSTEnroll (final Context context, final String user_id, final String seminar_id,
                                      final List<User> students, final ArrayAdapter adapter) {
         final String TAG = "POSTEnroll";
@@ -355,6 +428,11 @@ public class RequestFactory {
         };
     }
 
+    /**
+     * Cria uma request do tipo POST para editar o perfil de um aluno.
+     * Ao receber uma resposta positiva, inicia uma nova Activity, onde
+     * terá a lista de seminários novamente.
+     */
     public StringRequest POSTEditStudent (final Context context, String nusp, String name, String pass) {
         String url = this.base_url + "student/edit";
         final String TAG = "POSTEditStudent";
@@ -459,6 +537,11 @@ public class RequestFactory {
             }
         });
     }
+
+    /**
+     * Cria uma request do tipo GET para pegar informações de um aluno,
+     * dado seu número USP.
+     */
     public  JsonObjectRequest GETUserName (final Context context, final User user, final List<User> students, final ArrayAdapter adapter) {
         final String TAG = "GETUserName";
         Log.d(TAG, "In GetUserName");
