@@ -3,6 +3,8 @@ package ep1.joaofran.com.ep1;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
@@ -17,11 +19,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.PreferenceMatchers.withTitle;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -71,8 +75,12 @@ public class BehaviorTest {
     private SignupBox[] invalidsSignup = new SignupBox[2];
 
     @Rule
-    public ActivityTestRule<LoginActivity> loginActivityActivityTestRule =
+    public ActivityTestRule loginActivityActivityTestRule =
             new ActivityTestRule<>(LoginActivity.class);
+
+//    @Rule
+//    public ActivityTestRule<EditProfileActivity> editProfileActivityActivityTestRule =
+//            new ActivityTestRule<>(EditProfileActivity.class);
 
     @Rule
     public IntentsTestRule<ProfileActivity> profileActivityIntentsTestRule =
@@ -153,6 +161,19 @@ public class BehaviorTest {
         onView(withText(R.string.OK)).perform(click());
     }
 
+    private void openEditProfile (LoginBox login) {
+        fillLogin(login);
+
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
+        onView(withText(R.string.editprofile)).perform(click());
+    }
+
+    private void fillEditProfile (String new_name, LoginBox login) {
+        onView(withId(R.id.etEditName)).perform(typeText(new_name));
+        onView(withId(R.id.etEditPassword)).perform(typeText(login.PASS));
+        onView(withId(R.id.btnSaveChanges)).perform(click());
+    }
+
     @Test
     public void loginFail () {
         int i = (int) Math.random() * 2;
@@ -229,12 +250,29 @@ public class BehaviorTest {
     }
 
     @Test
-    public void editProfile () {
+    public void editProfileSuccess () {
         int i = (int) Math.random() * 31415;
         LoginBox login = new LoginBox("3141561","654321", i % 2 == 0);
+        String new_name = "NEW EDITED NAME " + i;
 
-        fillLogin(login);
+        openEditProfile(login);
 
-        // como abrir menu?
+        fillEditProfile(new_name,login);
+
+        intended(hasComponent(ProfileActivity.class.getName()));
+    }
+
+    @Test
+    public void editProfileFail () {
+        int i = (int) Math.random() * 31415;
+        LoginBox login = new LoginBox("3141561","654321", i % 2 == 0);
+        String new_name = "";
+
+        openEditProfile(login);
+
+        fillEditProfile(new_name,login);
+
+        loginActivityActivityTestRule = new ActivityTestRule(ProfileActivity.class);
+        checkToast(R.string.incorrect_info,loginActivityActivityTestRule);
     }
 }
