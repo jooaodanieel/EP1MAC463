@@ -45,9 +45,10 @@ public class EditProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
             case (R.id.itLogOut):
-                // clear no shared preferences
+                // limpa sessão
                 prefs_editor.clear();
                 prefs_editor.commit();
+                // volta para login sem histórico de activities
                 Intent intent = new Intent(EditProfileActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -86,10 +87,12 @@ public class EditProfileActivity extends AppCompatActivity {
         String pass = et_pass.getText().toString();
 
         if (!name.isEmpty() && !pass.isEmpty()) {
+            // submete alterações para WebService
             String nusp = prefs.getString(User.ID,"0000000");
             VolleySingleton.getInstance(view.getContext()).addToRequestQueue(
                     factory.POSTEditStudent(view.getContext(),nusp,name,pass));
         } else {
+            // não submete nada ao WebService e limpa os campos
             Toast.makeText(view.getContext(), getString(R.string.incorrect_info),Toast.LENGTH_SHORT).show();
             et_name.setText("");
             et_pass.setText("");
