@@ -50,13 +50,13 @@ public class SignUpActivity extends AppCompatActivity {
     public void signUp(View view) {
 
         Log.d(TAG, "button clicked");
-        // Sign up no webserver
         String name = et_name.getText().toString();
         String login = et_login.getText().toString();
         String password = et_password.getText().toString();
         Boolean is_student = (rg_type.getCheckedRadioButtonId() == R.id.rbStudent);
 
 
+        // verifica consistência dos dados informados e faz requisição no WebService
         if (name.isEmpty() || login.isEmpty() || password.isEmpty()) {
             Toast.makeText(view.getContext(), R.string.incorrect_info, Toast.LENGTH_LONG).show();
         } else {

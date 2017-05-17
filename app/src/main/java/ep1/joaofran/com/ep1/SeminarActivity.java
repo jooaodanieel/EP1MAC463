@@ -80,7 +80,7 @@ public class SeminarActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
             case (R.id.itLogOut):
-                // clear shared preferences
+                // apaga sessão
                 prefs_editor.clear();
                 prefs_editor.commit();
                 Intent intent = new Intent(SeminarActivity.this, LoginActivity.class);
@@ -103,7 +103,6 @@ public class SeminarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // ActionBar setup
         setTitle(R.string.seminar_title);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -116,6 +115,7 @@ public class SeminarActivity extends AppCompatActivity {
         seminar_id = intent.getStringExtra(Seminar.ID);
         seminar_name = intent.getStringExtra(Seminar.NAME);
 
+        // activity que só tem sentido se usuário for professor
         if (is_student) {
             Log.d(TAG, "Error");
         }
@@ -136,10 +136,9 @@ public class SeminarActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        // Testar se mudar de nome antes de deletar da erro no POST
         if(!is_student && (et_seminar_name.getText().toString() != seminar_name)) {
             Log.d(TAG, "Seminario editado");
-
+            // Submete alterações ao WebService
             Map<String,String> params = new HashMap<>();
             params.put("id",seminar_id);
             params.put("name", et_seminar_name.getText().toString());
@@ -149,6 +148,9 @@ public class SeminarActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Callback para botão de deletar seminário
+     */
     public void deleteSeminar (View view) {
 
         if (this.students.get(0).getId() == view.getContext().getString(R.string.no_students_enrolled)) {
@@ -188,6 +190,9 @@ public class SeminarActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Faz a requisição da lista de usuários matriculados naquele seminário
+     */
     private void listSetup () {
         students_list = (ListView) findViewById(R.id.lvStudents);
         students = new ArrayList<>();
@@ -196,13 +201,16 @@ public class SeminarActivity extends AppCompatActivity {
         students_list.setAdapter(adapter);
 
         Toast.makeText(SeminarActivity.this, R.string.students_retrieval, Toast.LENGTH_SHORT).show();
-        //POST
         final Map<String,String> params = new HashMap<>();
         params.put("seminar_id", seminar_id);
         StringRequest POSTRequest = factory.POSTStudentsEnrolled(this, students, adapter,params);
         VolleySingleton.getInstance(SeminarActivity.this).addToRequestQueue(POSTRequest);
     }
 
+    /**
+     * Exibe o QRCode para ser scanned pelos alunos para confirmarem
+     * presença naquele determinado seminário
+     */
     public void showQR(View view) {
         final Button bnt = (Button) findViewById(R.id.bntGenQR);
         bnt.setEnabled(false);
@@ -235,6 +243,9 @@ public class SeminarActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Gera o QRCode
+     */
     public Bitmap generateQR (String s) {
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -251,7 +262,11 @@ public class SeminarActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Método de confirmação no qual o professor faz um scan do
+     * código de barras da carteirinha do aluno e confirma a presença
+     * do mesmo no seminário
+     */
     public void scanBarcode(View v) {
         try {
             Intent intent = new Intent(QRCodeManager.ACTION_SCAN);

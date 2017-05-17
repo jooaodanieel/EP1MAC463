@@ -39,7 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         prefs_editor = prefs.edit();
 
         if (prefs.contains(User.ID)) {
-            Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);// New activity
+            // se tiver sessão ativa, já muda direto de activity
+            Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
@@ -54,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         if (!et_login.getText().toString().isEmpty() &&
                 !et_password.getText().toString().isEmpty() &&
                 radioGroup.getCheckedRadioButtonId() != -1) {
+
+            // submete informações ao WebService
             String login = et_login.getText().toString();
             String password = et_password.getText().toString();
             RadioButton checked = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());

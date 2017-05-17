@@ -92,12 +92,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        // recupera usuário logado
         prefs = getSharedPreferences(getString(R.string.shared_preferences_file),MODE_PRIVATE);
         prefs_editor = prefs.edit();
 
         String u_num = prefs.getString(User.ID,"default");
         Boolean u_student = prefs.getBoolean(User.TYPE,true);
 
+        // verifica o perfil do usuário: professor/aluno
         if (u_student) {
             Log.d(TAG, "In Profile activity: Student");
 
@@ -111,14 +113,13 @@ public class ProfileActivity extends AppCompatActivity {
             this.seminars_list = (ListView) findViewById(R.id.lvTeacherSeminar);
         }
 
+        // carrega lista de seminários do WebService
         listSetup(u_num, u_student);
     }
 
 
     private void listSetup(String num, Boolean student) {
         Log.d(TAG, "Setting up seminar list");
-
-//        Toast.makeText(this,R.string.seminars_retrieval, Toast.LENGTH_LONG).show();
 
         final String u_num = num;
         final Boolean u_student = student;
@@ -128,6 +129,7 @@ public class ProfileActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, R.layout.seminar_row, R.id.tvSeminar, this.seminars);
         seminars_list.setAdapter(adapter);
 
+        // caso seja professor, define que click em item da lista carrega SeminarActivity
         if (!student) {
             seminars_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -144,10 +146,14 @@ public class ProfileActivity extends AppCompatActivity {
             });
         }
 
+        // faz a request no WebService
         JsonObjectRequest request = factory.GETSeminarList(seminars, adapter, ProfileActivity.this);
         VolleySingleton.getInstance(this).addToRequestQueue(request);
     }
 
+    /**
+     * Callback do floating button quando usuário é professor
+     */
     public void addSeminar(final View view) {
         Log.d(TAG, "Adding new seminar");
 
@@ -179,6 +185,9 @@ public class ProfileActivity extends AppCompatActivity {
         alert.show();
     }
 
+    /**
+     * Callback do floating button quando usuário é aluno
+     */
     public void scanQR(View v) {
         try {
             Intent intent = new Intent(QRCodeManager.ACTION_SCAN);
