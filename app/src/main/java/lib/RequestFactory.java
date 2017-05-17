@@ -409,7 +409,7 @@ public class RequestFactory {
     }
 
     /**
-     * Cria uma request do tipo POST para editar o perfil de um aluno.
+     * Cria uma request do tipo POST para editar o perfil de um usuario.
      * Ao receber uma resposta positiva, inicia uma nova Activity, onde
      * terá a lista de seminários novamente.
      */
