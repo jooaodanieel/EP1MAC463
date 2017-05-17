@@ -56,16 +56,16 @@ public class RequestFactory {
      * recebida ao método 'treatGETSeminarRequestResponse'; caso contrário, numa
      * resposta negativa, cancela a Dialog e informa o usuário do erro ocorrido.
      */
-    public JsonObjectRequest GETSeminarList (final List<Seminar> seminars, final ArrayAdapter adapter,
-                                             final Context context) {
+    public JsonObjectRequest GETSeminarList(final List<Seminar> seminars, final ArrayAdapter adapter,
+                                            final Context context) {
         final String TAG = "GETSeminarList";
         String url = this.base_url + "seminar";
         String message = context.getString(R.string.seminars_retrieval);
 
         final ProgressDialog progressDialog = new ProgressDialog(context);
-                progressDialog.setIndeterminate(true);
-                progressDialog.setMessage(message);
-                progressDialog.show();
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(message);
+        progressDialog.show();
 
         return new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -77,7 +77,7 @@ public class RequestFactory {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG,"GETSeminarRequest failed");
+                Log.d(TAG, "GETSeminarRequest failed");
                 progressDialog.dismiss();
                 alertMsg(context, R.string.request_failure);
             }
@@ -89,7 +89,7 @@ public class RequestFactory {
      * e notifica o Adapter (da ListView) que houve alterações, para que
      * a ListView seja atualizada com o novo conteúdo.
      */
-    private void treatGETSeminarRequestResponse (JSONObject response, List<Seminar> seminars, ArrayAdapter adapter) {
+    private void treatGETSeminarRequestResponse(JSONObject response, List<Seminar> seminars, ArrayAdapter adapter) {
         try {
             if (response != null) {
                 for (int i = 0; i < ((JSONArray) response.get("data")).length(); i++) {
@@ -109,14 +109,14 @@ public class RequestFactory {
      * Ao receber uma resposta, notifica o usuário da situação (sucesso ou fracasso)
      * através de um Toast
      */
-    public StringRequest POSTNewSeminarRequest (final Context context, final Map<String,String> params) {
+    public StringRequest POSTNewSeminarRequest(final Context context, final Map<String, String> params) {
         final String TAG = "POSTNewSeminarRequest";
         String url = this.base_url + "seminar/add";
         return new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(context, params.get((String)"name").toString() + R.string.seminar_created_succsess, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, params.get((String) "name").toString() + R.string.seminar_created_succsess, Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -124,7 +124,7 @@ public class RequestFactory {
                 Log.d(TAG, "POSTNewSeminarRequest failed");
                 Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;
@@ -141,7 +141,7 @@ public class RequestFactory {
      * informa ao usuário com um texto no lugar da lista de alunos; caso a resposta
      * seja negativa, informa o usuário do ocorrido
      */
-    public StringRequest POSTStudentsEnrolled (final Context context, final List<User> students, final ArrayAdapter adapter, final Map<String,String> params) {
+    public StringRequest POSTStudentsEnrolled(final Context context, final List<User> students, final ArrayAdapter adapter, final Map<String, String> params) {
         final String TAG = "POSTStudentsEnrolled";
         String url = this.base_url + "attendence/listStudents";
 
@@ -156,12 +156,12 @@ public class RequestFactory {
                                 jsonObject = (JSONObject) data.get(i);
                                 User user = new User((String) jsonObject.get("student_nusp"), true);
                                 VolleySingleton.getInstance(context).addToRequestQueue(
-                                        new RequestFactory().GETUserName (context, user, students, adapter)
+                                        new RequestFactory().GETUserName(context, user, students, adapter)
                                 );
                             }
                         } catch (JSONException e) {
-                            Log.d(TAG,e.getMessage());
-                            User user = new User ("", true);
+                            Log.d(TAG, e.getMessage());
+                            User user = new User("", true);
                             user.setName(context.getString(R.string.no_students_enrolled));
                             students.add(user);
                             adapter.notifyDataSetChanged();
@@ -171,11 +171,11 @@ public class RequestFactory {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d(TAG,"failed");
+                        Log.d(TAG, "failed");
                         alertMsg(context, R.string.request_failure);
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;
@@ -187,14 +187,14 @@ public class RequestFactory {
      * Cria uma request do tipo POST para remover um seminário.
      * Em caso de erro, notifica o usuário através de um toast
      */
-    public StringRequest POSTDeleteSeminar (final Map<String,String> params, final Context context) {
+    public StringRequest POSTDeleteSeminar(final Map<String, String> params, final Context context) {
         final String TAG = "POSTDeleteSeminar";
         String url = this.base_url + "seminar/delete";
         return new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("POSTDeleteSeminar","delete success");
+                        Log.d("POSTDeleteSeminar", "delete success");
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -202,7 +202,7 @@ public class RequestFactory {
                 Log.d(TAG, "delete failed");
                 Toast.makeText(context, R.string.request_failure, Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;
@@ -231,8 +231,8 @@ public class RequestFactory {
             }
         }) {
             @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    return params;
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
             }
         };
     }
@@ -245,16 +245,16 @@ public class RequestFactory {
      * a nova activity - ProfileActivity -, onde há a lista de seminários; caso
      * haja uma resposta negativa, notifica o usuário do ocorrido
      */
-    public StringRequest POSTLogin (final Context context, final String login, String pass,
-                                    final boolean is_student, final SharedPreferences.Editor prefs_editor) {
+    public StringRequest POSTLogin(final Context context, final String login, String pass,
+                                   final boolean is_student, final SharedPreferences.Editor prefs_editor) {
         final String TAG = "POSTLogin";
         String url = this.base_url + "login/" + (is_student ? "student" : "teacher");
 
-        Log.d(TAG,"url: " + url);
+        Log.d(TAG, "url: " + url);
 
-        final Map<String,String> params = new HashMap<>();
-        params.put("nusp",login);
-        params.put("pass",pass);
+        final Map<String, String> params = new HashMap<>();
+        params.put("nusp", login);
+        params.put("pass", pass);
 
         String message = context.getString(R.string.authentication);
 
@@ -268,30 +268,9 @@ public class RequestFactory {
                     @Override
                     public void onResponse(String response) {
                         if (response.contains("true")) {
-                            Log.d(TAG,"login failed");
-                            progressDialog.dismiss();
-
-                            alertMsg(context, R.string.login_fail);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG,error.getMessage());
-                alertMsg(context, R.string.request_failure);
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                return params;
-            }
-        };
-    }
-
-
-                            Log.d(TAG,"login successful");
-                            prefs_editor.putString(User.ID,login);
-                            prefs_editor.putBoolean(User.TYPE,is_student);
+                            Log.d(TAG, "login successful");
+                            prefs_editor.putString(User.ID, login);
+                            prefs_editor.putBoolean(User.TYPE, is_student);
                             prefs_editor.commit();
                             Intent intent = new Intent(context, ProfileActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -301,7 +280,7 @@ public class RequestFactory {
 
                             ((Activity) context).finish();
                         } else {
-                            Log.d(TAG,"login failed");
+                            Log.d(TAG, "login failed");
                             progressDialog.dismiss();
 
                             alertMsg(context, R.string.login_fail);
@@ -310,10 +289,10 @@ public class RequestFactory {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG,error.getMessage());
+                Log.d(TAG, error.getMessage());
                 alertMsg(context, R.string.request_failure);
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;
@@ -321,20 +300,21 @@ public class RequestFactory {
         };
     }
 
+
     /**
      * Cria uma request do tipo POST para criar uma nova conta.
      * Exibe uma ProgressDialog enquanto espera uma resposta do
      * WebService. Caso a resposta seja positiva, faz login com
      * persistência (SharedPreferences)
      */
-    public StringRequest POSTSignUp (final Context context, final String name, final String login,
-                                     String pass, final boolean is_student, final SharedPreferences.Editor prefs_editor) {
+    public StringRequest POSTSignUp(final Context context, final String name, final String login,
+                                    String pass, final boolean is_student, final SharedPreferences.Editor prefs_editor) {
         final String TAG = "POSTSignUp";
-        String url = this.base_url + (is_student ? "student" : "teacher") +  "/add";
+        String url = this.base_url + (is_student ? "student" : "teacher") + "/add";
 
-        Log.d(TAG,"url: " + url);
+        Log.d(TAG, "url: " + url);
 
-        final Map<String,String> params = new HashMap<>();
+        final Map<String, String> params = new HashMap<>();
         params.put("name", name);
         params.put("nusp", login);
         params.put("pass", pass);
@@ -350,16 +330,16 @@ public class RequestFactory {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG,response);
+                        Log.d(TAG, response);
                         if (response.contains("true")) {
-                            Log.d(TAG,"signup successful");
-                            prefs_editor.putString(User.ID,login);
-                            prefs_editor.putBoolean(User.TYPE,is_student);
+                            Log.d(TAG, "signup successful");
+                            prefs_editor.putString(User.ID, login);
+                            prefs_editor.putBoolean(User.TYPE, is_student);
                             prefs_editor.commit();
                             progressDialog.dismiss();
-                            context.startActivity(new Intent(context,ProfileActivity.class));
+                            context.startActivity(new Intent(context, ProfileActivity.class));
                         } else {
-                            Log.d(TAG,"signup failed");
+                            Log.d(TAG, "signup failed");
                             progressDialog.dismiss();
                             alertMsg(context, R.string.signup_fail);
                         }
@@ -367,10 +347,10 @@ public class RequestFactory {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG,error.getMessage());
+                Log.d(TAG, error.getMessage());
                 alertMsg(context, R.string.request_failure);
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;
@@ -380,11 +360,12 @@ public class RequestFactory {
 
     /**
      * Cria uma request do tipo POST para matricular um aluno num seminário.
-     * Ao receber uma resposta positiva, faz uma nova request pelo nome do
-     * aluno para inserir na lista de matriculados.
+     * No caso do aluno estar sendo confirmado por um professor, recebe também a lista de alunos e
+     * seu adapter, para quando receber uma resposta positiva, faz uma nova request pelo nome do
+     * aluno e o insere na lista de matriculados.
      */
-    public StringRequest POSTEnroll (final Context context, final String user_id, final String seminar_id,
-                                     final List<User> students, final ArrayAdapter adapter) {
+    public StringRequest POSTEnroll(final Context context, final String user_id, final String seminar_id,
+                                    final List<User> students, final ArrayAdapter adapter) {
         final String TAG = "POSTEnroll";
         String url = base_url + "attendence/submit";
 
@@ -393,7 +374,7 @@ public class RequestFactory {
         Log.d(TAG, "NUSP: " + user_id);
         Log.d(TAG, "Seminar: " + seminar_id);
         params.put("nusp", user_id);
-        params.put ("seminar_id", seminar_id);
+        params.put("seminar_id", seminar_id);
 
         return new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -405,21 +386,20 @@ public class RequestFactory {
                             if (students != null) {
                                 User user = new User(user_id, true);
                                 VolleySingleton.getInstance(context).addToRequestQueue(
-                                        new RequestFactory().GETUserName (context, user, students, adapter)
+                                        new RequestFactory().GETUserName(context, user, students, adapter)
                                 );
                             }
-                        }
-                        else {
+                        } else {
                             Log.d(TAG, "enroll fail");
                             alertMsg(context, R.string.enroll_fail);
                         }
                     }
                 }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d(TAG,error.getMessage());
-                    alertMsg(context, R.string.request_failure);
-                }
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, error.getMessage());
+                alertMsg(context, R.string.request_failure);
+            }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -433,20 +413,20 @@ public class RequestFactory {
      * Ao receber uma resposta positiva, inicia uma nova Activity, onde
      * terá a lista de seminários novamente.
      */
-    public StringRequest POSTEditStudent (final Context context, String nusp, String name, String pass) {
+    public StringRequest çnt(final Context context, String nusp, String name, String pass) {
         String url = this.base_url + "student/edit";
-        final String TAG = "POSTEditStudent";
+        final String TAG = "˜nt";
 
-        final Map<String,String> params = new HashMap<>();
-        params.put("nusp",nusp);
-        params.put("name",name);
-        params.put("pass",pass);
+        final Map<String, String> params = new HashMap<>();
+        params.put("nusp", nusp);
+        params.put("name", name);
+        params.put("pass", pass);
 
         return new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(TAG,"sucess");
+                        Log.d(TAG, "sucess");
                         alertMsg(context, R.string.edit_success);
                         Intent intent = new Intent(context, ProfileActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -455,10 +435,10 @@ public class RequestFactory {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG,"Failed");
+                Log.d(TAG, "Failed");
                 alertMsg(context, R.string.request_failure);
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;
@@ -466,8 +446,13 @@ public class RequestFactory {
         };
     }
 
-    public StringRequest ConfirmStudent (final Context context, final String nusp, final String seminar_id,
-                                         final List<User> students, final ArrayAdapter adapter) {
+    /**
+     * Chamada quando um professor tenta confirmar um aluno. Cria uma request do tipo GET para confirmar
+     * que o aluno sendo confirmado é um aluno válido. Ao receber uma resposta positiva chama a
+     * função de confirmação (POSTEnroll) passando a lista de alunos e seu adapter.
+     */
+    public StringRequest ConfirmStudent(final Context context, final String nusp, final String seminar_id,
+                                        final List<User> students, final ArrayAdapter adapter) {
         final String TAG = "ConfirmStudent";
         String url = this.base_url + "student/get/" + nusp;
         String message = context.getString(R.string.authentication);
@@ -486,24 +471,28 @@ public class RequestFactory {
                             Log.d(TAG, "Student");
 
                             VolleySingleton.getInstance(context).addToRequestQueue(
-                                    new RequestFactory().POSTEnroll (context, nusp, seminar_id, students, adapter)
+                                    new RequestFactory().POSTEnroll(context, nusp, seminar_id, students, adapter)
                             );
-                        }
-                        else {
+                        } else {
                             alertMsg(context, R.string.no_account);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG,"GET Student failed");
+                Log.d(TAG, "GET Student failed");
                 progressDialog.dismiss();
                 alertMsg(context, R.string.no_account);
             }
         });
     }
 
-    public StringRequest ConfirmSeminar (final Context context, final String nusp, final String seminar_id) {
+    /**
+     * Chamada quando um aluno tenta se matricular em um seminario. Cria uma request do tipo GET para confirmar
+     * que o seminario é válido. Ao receber uma resposta positiva chama a
+     * função de confirmação (POSTEnroll).
+     */
+    public StringRequest ConfirmSeminar(final Context context, final String nusp, final String seminar_id) {
         final String TAG = "ConfirmSeminar";
         String url = this.base_url + "seminar/get/" + seminar_id;
         String message = context.getString(R.string.authentication);
@@ -522,7 +511,7 @@ public class RequestFactory {
                             Log.d(TAG, "Seminar");
 
                             VolleySingleton.getInstance(context).addToRequestQueue(
-                                    new RequestFactory().POSTEnroll (context, nusp, seminar_id, null, null)
+                                    new RequestFactory().POSTEnroll(context, nusp, seminar_id, null, null)
                             );
                         } else {
                             alertMsg(context, R.string.no_seminar);
@@ -531,7 +520,7 @@ public class RequestFactory {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG,"No seminar");
+                Log.d(TAG, "No seminar");
                 progressDialog.dismiss();
                 alertMsg(context, R.string.no_seminar);
             }
@@ -542,7 +531,7 @@ public class RequestFactory {
      * Cria uma request do tipo GET para pegar informações de um aluno,
      * dado seu número USP.
      */
-    public  JsonObjectRequest GETUserName (final Context context, final User user, final List<User> students, final ArrayAdapter adapter) {
+    public JsonObjectRequest GETUserName(final Context context, final User user, final List<User> students, final ArrayAdapter adapter) {
         final String TAG = "GETUserName";
         Log.d(TAG, "In GetUserName");
         String url = this.base_url + (user.isStudent() ? "student" : "teacher") + "/get/" + user.getId();
@@ -564,13 +553,13 @@ public class RequestFactory {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG,"failed");
+                Log.d(TAG, "failed");
                 alertMsg(context, R.string.request_failure);
             }
         });
     }
 
-    private void alertMsg (Context context, int string_id) {
+    private void alertMsg(Context context, int string_id) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle(context.getString(string_id));
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
